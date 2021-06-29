@@ -8,10 +8,14 @@ import iconExplorer from '../images/exploreIcon.svg';
 function Footer() {
   return (
     <footer>
-      <Card.Footer>
-        <img src={ iconDrinks } alt="Menu de Drinks" />
-        <img src={ iconExplorer } alt="Menu de Usuario" />
-        <img src={ iconMeals } alt="Menu de Comidas" />
+      <Card.Footer data-testid="footer">
+        <img data-testid="drinks-bottom-btn" src={ iconDrinks } alt="Menu de Drinks" />
+        <img
+          data-testid="explore-bottom-btn"
+          src={ iconExplorer }
+          alt="Menu de Usuario"
+        />
+        <img data-testid="food-bottom-btn" src={ iconMeals } alt="Menu de Comidas" />
       </Card.Footer>
     </footer>
   );
