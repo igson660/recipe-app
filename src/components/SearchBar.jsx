@@ -1,8 +1,45 @@
 import React, { useState } from 'react';
+import Alert from 'react-bootstrap/Alert';
+import { useHistory } from 'react-router-dom';
+import {
+  searchRecipesByFirstLetter,
+  searchRecipesByIngredients,
+  searchRecipesByName,
+} from '../services/api';
 
 function SearchBar() {
   const [radioValue, setRadioValue] = useState('');
   const [searchValue, setSearchValue] = useState('');
+  const { location: { pathname } } = useHistory();
+  const [recipes, setRecipes] = useState({});
+  const [alert, setAlert] = useState(false);
+
+  async function handleSearchButton() {
+    switch (radioValue) {
+    case 'ingredients':
+    {
+      const data = await searchRecipesByIngredients(pathname, searchValue);
+      setRecipes(data);
+      break;
+    }
+    case 'name': {
+      const data = await searchRecipesByName(pathname, searchValue);
+      setRecipes(data);
+      break;
+    }
+    case 'first-letter': {
+      if (searchValue.length === 1) {
+        setAlert(false);
+        const data = await searchRecipesByFirstLetter(pathname, searchValue);
+        setRecipes(data);
+        break;
+      }
+      setAlert(true);
+      break;
+    }
+    default:
+    }
+  }
   return (
     <div>
       <input
@@ -17,7 +54,7 @@ function SearchBar() {
         name="search-bar-inputs"
         onChange={ ({ target }) => setRadioValue(target.value) }
       />
-      Ingredientes
+      Ingrediente
       <input
         type="radio"
         value="name"
@@ -37,9 +74,18 @@ function SearchBar() {
       <button
         type="button"
         data-testid="exec-search-btn"
+        onClick={ handleSearchButton }
+        disabled={ !(radioValue && searchValue) }
       >
         Buscar
       </button>
+      {alert
+      && (
+        <Alert
+          variant="warning"
+        >
+          Sua busca deve conter somente 1 (um) caracter
+        </Alert>)}
 
     </div>
   );
