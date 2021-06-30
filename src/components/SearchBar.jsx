@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import Alert from 'react-bootstrap/Alert';
 import { useHistory } from 'react-router-dom';
+import Alert from 'react-bootstrap/Alert';
+import useSearchBar from '../hooks/searchBar';
 import {
   searchRecipesByFirstLetter,
   searchRecipesByIngredients,
@@ -11,8 +12,11 @@ function SearchBar() {
   const [radioValue, setRadioValue] = useState('');
   const [searchValue, setSearchValue] = useState('');
   const { location: { pathname } } = useHistory();
-  const [recipes, setRecipes] = useState({});
   const [alert, setAlert] = useState(false);
+  const {
+    recipes,
+    setRecipes,
+  } = useSearchBar();
 
   async function handleSearchButton() {
     switch (radioValue) {
@@ -86,7 +90,6 @@ function SearchBar() {
         >
           Sua busca deve conter somente 1 (um) caracter
         </Alert>)}
-
     </div>
   );
 }
