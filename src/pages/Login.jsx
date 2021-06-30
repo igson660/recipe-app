@@ -55,7 +55,7 @@ class Login extends React.Component {
             variant="primary"
             type="submit"
             onClick={ this.handleClick }
-            disabled={ !(password.length > quanty
+            disabled={ !(password.length > minPasswordLength
               && email.includes('.com') && email.includes('@')) }
           >
             Entrar
