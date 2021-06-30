@@ -2,7 +2,7 @@ import React from 'react';
 import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Footer from '../Components/Footer';
-import renderWithRouter from './RenderWithRouter';
+import renderWithRouter from './renderWithRouter';
 
 describe('Teste componente Footer', () => {
   test('Ao clicar no botao Drink, renderiza bebidas', () => {

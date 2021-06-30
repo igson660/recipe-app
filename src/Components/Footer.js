@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Footer.css';
+import '../Styles/Footer.css';
 import { Link } from 'react-router-dom';
 import iconDrinks from '../images/drinkIcon.svg';
 import iconMeals from '../images/mealIcon.svg';
