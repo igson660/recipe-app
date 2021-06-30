@@ -26,7 +26,7 @@ class Login extends React.Component {
 
   render() {
     const { email, password, isValidLogin } = this.state;
-    const quanty = 6;
+    const minPasswordLength = 6;
     return (
       <>
         <Form>
