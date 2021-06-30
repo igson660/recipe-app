@@ -3,8 +3,8 @@ import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Recipes from './pages/Recipes';
-import DrinkList from './Components/DrinkList';
-import ExplorerList from './Components/ExplorerList';
+import DrinkList from './components/DrinkList';
+import ExplorerList from './components/ExplorerList';
 
 function App() {
   return (
