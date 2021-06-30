@@ -14,11 +14,12 @@ function SearchBar() {
   const { location: { pathname } } = useHistory();
   const [alert, setAlert] = useState(false);
   const {
-    recipes,
     setRecipes,
+    setLoading,
   } = useSearchBar();
 
   async function handleSearchButton() {
+    setLoading(true);
     switch (radioValue) {
     case 'ingredients':
     {
@@ -43,7 +44,27 @@ function SearchBar() {
     }
     default:
     }
+    setLoading(false);
   }
+
+  // if (recipes === null) {
+  //   return (
+  //     <Alert
+  //       variant="warning"
+  //     >
+  //       Sinto muito, não encontramos nenhuma receita para esses filtros.
+  //     </Alert>);
+  // }
+
+  // if (recipes.length === 1) {
+  //   let id = 'idDrink';
+  //   if (pathname === '/comidas') {
+  //     id = 'idMeal';
+  //   }
+  //   return (
+  //     <Redirect to={ `${pathname}/${recipes[0][id]}` } />
+  //   );
+  // }
   return (
     <div>
       <input
