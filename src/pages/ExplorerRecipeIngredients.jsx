@@ -3,7 +3,7 @@ import Header from '../components/Header';
 
 function ExplorerRecipeIngredients() {
   return (
-    <Header title="Explorar Ingredientes" />
+    <Header title="Explorar Ingredientes" withIconSearch={ false } />
   );
 }
 

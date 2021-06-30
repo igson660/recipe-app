@@ -14,7 +14,7 @@ import ExplorerRecipeArea from './pages/ExplorerRecipeArea';
 import ExplorerRecipeIngredients from './pages/ExplorerRecipeIngredients';
 import ExplorerDrink from './pages/ExplorerDrink';
 import ExplorerDrinkIngredients from './pages/ExplorerDrinkIngredients';
-import ExplorerProfile from './pages/ExplorerProfile';
+import Profile from './pages/Profile';
 import RecipeDone from './pages/RecipeDone';
 import RecipeFavorite from './pages/RecipeFavorite';
 
@@ -41,9 +41,9 @@ function App() {
         path="/explorar/bebidas/ingredientes"
         component={ ExplorerDrinkIngredients }
       />
-      <Route path="/explorar/perfil" exact component={ ExplorerProfile } />
-      <Route path="/explorar/receitas-feitas" exact component={ RecipeDone } />
-      <Route path="/explorar/receitas-favoritas" exact component={ RecipeFavorite } />
+      <Route path="/perfil" exact component={ Profile } />
+      <Route path="/receitas-feitas" exact component={ RecipeDone } />
+      <Route path="/receitas-favoritas" exact component={ RecipeFavorite } />
     </Switch>
   );
 }

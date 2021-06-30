@@ -3,7 +3,7 @@ import Header from '../components/Header';
 
 function RecipeDone() {
   return (
-    <Header title="Comidas" />
+    <Header title="Receitas Feitas" withIconSearch={ false } />
   );
 }
 
