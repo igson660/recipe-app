@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-export default class Drinks extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {};
-  }
-
-  render() {
-    return (
+function Drinks() {
+  return (
+    <>
       <Header title="Bebidas" />
-    );
-  }
+      <Footer />
+    </>
+  );
 }
+
+export default Drinks;
