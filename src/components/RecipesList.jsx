@@ -20,6 +20,7 @@ export default function RecipesList() {
         if (index <= maxNumberOfRecipes) {
           return (
             <RecipeCard
+              id={ recipe.idMeal }
               key={ recipe.idMeal }
               thumbnail={ recipe.strMealThumb }
               name={ recipe.strMeal }
