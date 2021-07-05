@@ -1,11 +1,12 @@
 import React from 'react';
-import { screen, waitFor } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import renderWithRouter from './renderWithRouter';
 import { SearchBarContextProvider } from '../contexts/searchBarContext';
 import { HeaderContextProvider } from '../contexts/headerContext';
 import Recipes from '../pages/Recipes';
-import fetch from './mocks/fetch';
+import tomatoesMock from './mocks/searchBar/Tomatoes';
+import * as api from '../services/api';
 
 const SEARCH_INPUT = 'search-input';
 const SEARCH_BUTTON = 'search-top-btn';
@@ -62,6 +63,16 @@ describe('Teste componente SearchBar', () => {
         </SearchBarContextProvider>
       </HeaderContextProvider>,
     );
+    const apiResponse = Promise.resolve({
+      json: () => Promise.resolve(tomatoesMock),
+      ok: true,
+    });
+
+    const mockRecipeApi = jest
+      .spyOn(api, 'searchRecipesByIngredients')
+      .mockImplementation(() => apiResponse);
+      // .mockResolvedValue(apiResponse);
+
     const searchBtn = screen.getByTestId(SEARCH_BUTTON);
     userEvent.click(searchBtn);
     const searchInput = screen.getByTestId(SEARCH_INPUT);
@@ -70,8 +81,9 @@ describe('Teste componente SearchBar', () => {
     userEvent.click(ingredientRadio);
     const execBtn = screen.getByTestId(EXEC_SEARCH);
     userEvent.click(execBtn);
-    const text = screen.findByText('Baingan Bharta');
+    expect(mockRecipeApi).toHaveBeenCalled();
+
+    const text = await screen.findByText('Baingan Bharta');
     expect(text).toBeInTheDocument();
-    expect(fetch).toHaveBeenCalledTimes(1);
   });
 });
