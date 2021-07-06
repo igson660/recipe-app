@@ -79,3 +79,9 @@ export async function RandomRecipe(pathname) {
     return null;
   }
 }
+
+export const getMealApi = async (id) => {
+  const endpoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const { meals } = await fetch(endpoint).then((data) => data.json());
+  return meals;
+};
