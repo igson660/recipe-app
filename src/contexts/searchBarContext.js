@@ -5,10 +5,11 @@ export const SearchBarContext = createContext();
 
 export function SearchBarContextProvider({ children }) {
   const [recipes, setRecipes] = useState({});
+  const [categories, setCategories] = useState({});
   const [loading, setLoading] = useState(false);
   return (
     <SearchBarContext.Provider
-      value={ { recipes, setRecipes, loading, setLoading } }
+      value={ { recipes, setRecipes, categories, setCategories, loading, setLoading } }
     >
       {children}
     </SearchBarContext.Provider>
