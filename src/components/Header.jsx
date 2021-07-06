@@ -10,15 +10,13 @@ import useHeader from '../hooks/header';
 export default function Header({ title, withIconSearch = true }) {
   const { toggleSearchBar, setToggleSearchBar } = useHeader();
   return (
-    <Container className="m-1" fluid>
-      <Row>
+    <Container fluid>
+      <Row className="m-1">
         <Link to="/perfil">
-          <Col>
-            <Image
-              data-testid="profile-top-btn"
-              src={ iconProfile }
-            />
-          </Col>
+          <Image
+            data-testid="profile-top-btn"
+            src={ iconProfile }
+          />
         </Link>
         <Col
           xs
@@ -30,13 +28,13 @@ export default function Header({ title, withIconSearch = true }) {
         </Col>
         {withIconSearch
             && (
-              <Col className="text-right">
+              <span className="text-right">
                 <Image
                   onClick={ () => setToggleSearchBar(!toggleSearchBar) }
                   data-testid="search-top-btn"
                   src={ iconSearch }
                 />
-              </Col>)}
+              </span>)}
       </Row>
     </Container>
   );
