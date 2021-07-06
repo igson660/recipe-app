@@ -10,7 +10,6 @@ export default function RecipesList() {
   if (recipes !== null && recipes.length === 1) {
     return (<Redirect to={ `/comidas/${recipes[0].idMeal}` } />);
   }
-
   return (
     <div>
       { loading && 'carregando...' }

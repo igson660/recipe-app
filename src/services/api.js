@@ -60,3 +60,24 @@ export async function searchRecipesByFirstLetter(pathname, searchValue) {
     return null;
   }
 }
+
+export async function searchRecipes(pathname) {
+  if (pathname === '/comidas') {
+    try {
+      const response = await
+      fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+      const { meals } = await response.json();
+      return meals;
+    } catch (error) {
+      return null;
+    }
+  }
+  try {
+    const response = await
+    fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+    const { drinks } = await response.json();
+    return drinks;
+  } catch (error) {
+    return null;
+  }
+}
