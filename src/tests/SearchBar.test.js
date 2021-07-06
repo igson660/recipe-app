@@ -38,7 +38,7 @@ describe('teste do componnte SearchBar', () => {
     const searchInput = screen.getByTestId(SEARCH_INPUT);
     expect(searchInput).toBeInTheDocument();
   });
-  test('3 -Verifica se existem todos os radios e inputs', () => {
+  test('3 - Verifica se existem todos os radios e inputs', () => {
     renderWithRouter(
       <HeaderContextProvider>
         <SearchBarContextProvider>
