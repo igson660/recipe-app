@@ -16,7 +16,7 @@ const EXEC_SEARCH = 'exec-search-btn';
 const INGREDIENT_RADIO = 'ingredient-search-radio';
 const NAME_RADIO = 'name-search-radio';
 const FIRST_LETTER_RADIO = 'first-letter-search-radio';
-describe('Teste da página /bebidas', () => {
+describe('Teste da página de bebidas', () => {
   afterEach(cleanup);
   test(
     `1 -Verifica se ao fazer uma busca em /bebidas
