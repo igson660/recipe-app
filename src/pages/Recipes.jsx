@@ -5,30 +5,36 @@ import Footer from '../components/Footer';
 import SearchBar from '../components/SearchBar';
 import RecipesList from '../components/RecipesList';
 import useSearchBar from '../hooks/searchBar';
-import { searchRecipes, searchCategories } from '../services/api';
+import {
+  searchRecipes, searchCategories, searchRecipesByCategory } from '../services/api';
 
 export default function Recipes() {
   const maxNumberOfCategories = 5;
-  const { location: { pathname } } = useHistory();
   const { setRecipes, setLoading, categories, setCategories } = useSearchBar();
+  const { location: { pathname } } = useHistory();
 
-  async function handleCategories() {
+  async function handleRecipesByCategory(category) {
     setLoading(true);
-    const data = await searchCategories(pathname);
-    setCategories(data);
-  }
-
-  async function handleRecipes() {
-    setLoading(true);
-    const data = await searchRecipes(pathname);
+    const data = await searchRecipesByCategory(pathname, category);
     setRecipes(data);
+    setLoading(false);
   }
 
   useEffect(() => {
+    async function handleRecipes() {
+      setLoading(true);
+      const data = await searchRecipes(pathname);
+      setRecipes(data);
+    }
+    async function handleCategories() {
+      setLoading(true);
+      const data = await searchCategories(pathname);
+      setCategories(data);
+    }
     handleRecipes();
     handleCategories();
     setLoading(false);
-  });
+  }, [setLoading, pathname, setCategories, setRecipes]);
 
   return (
     <>
@@ -42,7 +48,9 @@ export default function Recipes() {
               <button
                 key={ index }
                 type="button"
+                value={ category.strCategory }
                 data-testid={ `${category.strCategory}-category-filter` }
+                onClick={ (e) => handleRecipesByCategory(e.target.value) }
               >
                 {category.strCategory}
               </button>
