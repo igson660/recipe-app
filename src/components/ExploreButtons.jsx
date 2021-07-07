@@ -1,18 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { RandomRecipe } from '../services/api';
 
 function ExploreButtons({ exploreByArea = true }) {
   const history = useHistory();
+  const [path, setPath] = useState(null);
   const { location: { pathname } } = history;
+  console.log(path);
 
   async function handleSurpriseRecipe() {
     const typeOfFood = pathname.split('/')[2];
     const data = await RandomRecipe(typeOfFood);
     let idKey = 'idMeal';
     if (typeOfFood === 'bebidas') idKey = 'idDrink';
-    history.push(`/${typeOfFood}/${data[0][idKey]}`);
+    const url = `/${typeOfFood}/${data[0][idKey]}`;
+    setPath(`/${typeOfFood}/${data[0][idKey]}`);
+    return url;
+    // history.push(`/${typeOfFood}/${data[0][idKey]}`);
   }
 
   return (
@@ -35,6 +40,7 @@ function ExploreButtons({ exploreByArea = true }) {
           </button>)}
 
       </Link>
+      {/* <Link to={ () => handleSurpriseRecipe() }> */}
       <button
         onClick={ handleSurpriseRecipe }
         type="button"
@@ -42,6 +48,8 @@ function ExploreButtons({ exploreByArea = true }) {
       >
         Me Surpreenda!
       </button>
+
+      {/* </Link> */}
     </>
   );
 }
