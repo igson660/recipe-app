@@ -5,7 +5,6 @@ import renderWithRouter from './renderWithRouter';
 import { HeaderContextProvider } from '../contexts/headerContext';
 import { SearchBarContextProvider } from '../contexts/searchBarContext';
 import Recipes from '../pages/Recipes';
-// import iconSearch from '../images/searchIcon.svg';
 
 function renderizer(component) {
   return renderWithRouter(
