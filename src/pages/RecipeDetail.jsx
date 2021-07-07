@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import useSearchBar from '../hooks/searchBar';
 import iconShared from '../images/shareIcon.svg';
 import iconFavorite from '../images/whiteHeartIcon.svg';
-import { getMealApi } from '../services/api';
+import { getMealApi, getDrinkApi } from '../services/api';
 
 export default function RecipeDetail(index) {
   const { selectedMeal, setSelectedMeal } = useSearchBar();
@@ -14,7 +14,9 @@ export default function RecipeDetail(index) {
     const id = pathname.split('/')[2];
     const handleState = async () => {
       const meals = await getMealApi(id);
+      const drinks = await getDrinkApi();
       setSelectedMeal(meals[0]);
+      console.log(drinks);
     };
     handleState();
   }, [pathname, setSelectedMeal]);
