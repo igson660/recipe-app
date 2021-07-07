@@ -11,14 +11,11 @@ function ExploreButtons({ exploreByArea = true }) {
   useEffect(() => {
     async function handleSurpriseRecipe() {
       const typeOfFood = pathname.split('/')[2];
-      console.log(typeOfFood);
       const data = await RandomRecipe(typeOfFood);
-      // console.log(data);
       let idKey = 'idMeal';
       if (typeOfFood === 'bebidas') idKey = 'idDrink';
       setPath(`/${typeOfFood}/${data[0][idKey]}`);
     }
-
     handleSurpriseRecipe();
   }, [pathname]);
 

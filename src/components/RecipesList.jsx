@@ -7,8 +7,6 @@ export default function RecipesList() {
   const maxNumberOfRecipes = 11;
   const { recipes, loading } = useSearchBar();
 
-  // console.log(recipes.length);
-
   if (recipes !== null && recipes.length === 1) {
     return (<Redirect to={ `/comidas/${recipes[0].idMeal}` } />);
   }

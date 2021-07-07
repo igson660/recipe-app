@@ -1,7 +1,7 @@
 import React from 'react';
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
-import { cleanup, wait } from '@testing-library/react';
+import { cleanup, waitFor } from '@testing-library/react';
 import renderWithRouter from './renderWithRouter';
 import ExplorerRecipe from '../pages/ExplorerRecipe';
 import { SearchBarContextProvider } from '../contexts/searchBarContext';
@@ -81,7 +81,11 @@ describe('Testa pagina de explorar', () => {
 
     expect(history.location.pathname).toBe('/explorar/comidas/area');
   });
-  test.only('ao clicar no botao de surpresa em comidas redireciona corretamente', async () => {
+  test('ao clicar no botao de surpresa em comidas redireciona corretamente', async () => {
+    const mockRecipeApi = jest
+      .spyOn(api, 'RandomRecipe')
+      .mockResolvedValueOnce(randomMealMock.meals);
+
     const { history } = renderWithRouter(
       <HeaderContextProvider>
         <SearchBarContextProvider>
@@ -90,28 +94,13 @@ describe('Testa pagina de explorar', () => {
       </HeaderContextProvider>,
       MEALS_PATH,
     );
-    const timeout = 3000;
 
-    const mockRecipeApi = jest
-      .spyOn(api, 'RandomRecipe')
-      .mockResolvedValue(randomMealMock.meals);
-
-    const surpriseButton = screen.getByTestId(EXPLORE_SURPRISE);
-
-    await wait(() => {
-      // userEvent.click(surpriseButton);
-      // expect(mockRecipeApi).toHaveBeenCalledWith('comidas');
+    await waitFor(() => {
+      const surpriseButton = screen.getByTestId(EXPLORE_SURPRISE);
+      userEvent.click(surpriseButton);
+      expect(mockRecipeApi).toHaveBeenCalled();
       expect(history.location.pathname).toBe('/comidas/52920');
     });
-
-    // await wait(async () => {
-    //   const text = await screen.findByText('Detalhes');
-    //   expect(text).toBeInTheDocument();
-    // }, { timeout });
-
-    // setTimeout(async () => {
-    //   await checkRandomMealPath(history);
-    // }, timeout);
   });
   test('ao clicar no botao de ingredientes em bebidas redireciona corretamente', () => {
     const { history } = renderWithRouter(
@@ -140,6 +129,10 @@ describe('Testa pagina de explorar', () => {
     expect(areaButton).not.toBeInTheDocument();
   });
   test('ao clicar no botao de surpresa em bebidas redireciona corretamente', async () => {
+    const mockRecipeApi = jest
+      .spyOn(api, 'RandomRecipe')
+      .mockResolvedValueOnce(randomDrinkMock.drinks);
+
     const { history } = renderWithRouter(
       <HeaderContextProvider>
         <SearchBarContextProvider>
@@ -148,18 +141,12 @@ describe('Testa pagina de explorar', () => {
       </HeaderContextProvider>,
       DRINKS_PATH,
     );
-    const timeout = 3000;
 
-    const mockRecipeApi = jest
-      .spyOn(api, 'RandomRecipe')
-      .mockResolvedValue(randomDrinkMock.drinks);
-
-    const surpriseButton = screen.getByTestId(EXPLORE_SURPRISE);
-
-    setTimeout(async () => {
+    await waitFor(() => {
+      const surpriseButton = screen.getByTestId(EXPLORE_SURPRISE);
       userEvent.click(surpriseButton);
-      await expect(mockRecipeApi).toHaveBeenCalledWith('bebidas');
+      expect(mockRecipeApi).toHaveBeenCalledWith('bebidas');
       expect(history.location.pathname).toBe('/bebidas/17223');
-    }, timeout);
+    });
   });
 });
