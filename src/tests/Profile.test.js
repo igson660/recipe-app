@@ -1,6 +1,5 @@
 import React from 'react';
 import { screen, fireEvent } from '@testing-library/react';
-
 import renderWithRouter from './renderWithRouter';
 import { HeaderContextProvider } from '../contexts/headerContext';
 import { SearchBarContextProvider } from '../contexts/searchBarContext';
