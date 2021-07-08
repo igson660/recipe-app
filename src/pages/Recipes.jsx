@@ -10,31 +10,37 @@ import {
 
 export default function Recipes() {
   const maxNumberOfCategories = 5;
-  const { setRecipes, setLoading, categories, setCategories, buttonState,
-    setButtonState, currentCategory, setCurrentCategory } = useSearchBar();
+  const { setRecipes, setLoading, categories, setCategories,
+    currentCategory, setCurrentCategory } = useSearchBar();
   const { location: { pathname } } = useHistory();
 
-  async function handleRecipesByCategory(category) {
-    setButtonState(!buttonState);
-    setLoading(true);
-    const data = await searchRecipesByCategory(pathname, category);
-    setRecipes(data);
-    setLoading(false);
+  async function handleClick(category) {
+    setCurrentCategory(category);
+    if (currentCategory === category) {
+      setLoading(true);
+      const data = await searchRecipes(pathname);
+      setRecipes(data);
+      setLoading(false);
+    } else {
+      setLoading(true);
+      const data = await searchRecipesByCategory(pathname, category);
+      setRecipes(data);
+      setLoading(false);
+    }
   }
 
   async function handleAllRecipes() {
     setLoading(true);
     const data = await searchRecipes(pathname);
     setRecipes(data);
+    setLoading(false);
   }
 
   useEffect(() => {
     async function handleRecipes() {
-      if (!buttonState) {
-        setLoading(true);
-        const data = await searchRecipes(pathname);
-        setRecipes(data);
-      }
+      setLoading(true);
+      const data = await searchRecipes(pathname);
+      setRecipes(data);
     }
     async function handleCategories() {
       setLoading(true);
@@ -44,7 +50,7 @@ export default function Recipes() {
     handleRecipes();
     handleCategories();
     setLoading(false);
-  }, [setLoading, pathname, setCategories, setRecipes, buttonState]);
+  }, [setLoading, pathname, setCategories, setRecipes]);
 
   return (
     <>
@@ -67,7 +73,7 @@ export default function Recipes() {
                 type="submit"
                 value={ category.strCategory }
                 data-testid={ `${category.strCategory}-category-filter` }
-                onClick={ ({ target }) => handleRecipesByCategory(target.value) }
+                onClick={ () => handleClick(category.strCategory) }
               >
                 {category.strCategory}
               </button>

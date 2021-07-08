@@ -7,7 +7,6 @@ export function SearchBarContextProvider({ children }) {
   const [recipes, setRecipes] = useState({});
   const [categories, setCategories] = useState({});
   const [loading, setLoading] = useState(false);
-  const [buttonState, setButtonState] = useState(false);
   const [currentCategory, setCurrentCategory] = useState({});
   return (
     <SearchBarContext.Provider
@@ -17,8 +16,6 @@ export function SearchBarContextProvider({ children }) {
         setCategories,
         loading,
         setLoading,
-        buttonState,
-        setButtonState,
         currentCategory,
         setCurrentCategory } }
     >

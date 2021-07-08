@@ -12,14 +12,21 @@ function Drinks() {
   const maxNumberOfCategories = 5;
   const { location: { pathname } } = useHistory();
   const { setRecipes, setLoading, categories, setCategories,
-    buttonState, setButtonState, selectedCategory, setSelectedCategory } = useSearchBar();
+    currentCategory, setCurrentCategory } = useSearchBar();
 
-  async function handleRecipesByCategory(category) {
-    setButtonState(!buttonState);
-    setLoading(true);
-    const data = await searchRecipesByCategory(pathname, category);
-    setRecipes(data);
-    setLoading(false);
+  async function handleClick(category) {
+    setCurrentCategory(category);
+    if (currentCategory === category) {
+      setLoading(true);
+      const data = await searchRecipes(pathname);
+      setRecipes(data);
+      setLoading(false);
+    } else {
+      setLoading(true);
+      const data = await searchRecipesByCategory(pathname, category);
+      setRecipes(data);
+      setLoading(false);
+    }
   }
 
   async function handleAllRecipes() {
@@ -30,11 +37,10 @@ function Drinks() {
 
   useEffect(() => {
     async function handleRecipes() {
-      if (!buttonState) {
-        setLoading(true);
-        const data = await searchRecipes(pathname);
-        setRecipes(data);
-      }
+      setLoading(true);
+      const data = await searchRecipes(pathname);
+      setRecipes(data);
+      setLoading(false);
     }
 
     async function handleCategories() {
@@ -45,7 +51,7 @@ function Drinks() {
     handleRecipes();
     handleCategories();
     setLoading(false);
-  }, [setLoading, pathname, setCategories, setRecipes, buttonState]);
+  }, [setLoading, pathname, setCategories, setRecipes]);
 
   return (
     <>
@@ -68,7 +74,7 @@ function Drinks() {
                 type="submit"
                 value={ category.strCategory }
                 data-testid={ `${category.strCategory}-category-filter` }
-                onClick={ ({ target }) => handleRecipesByCategory(target.value) }
+                onClick={ () => handleClick(category.strCategory) }
               >
                 {category.strCategory}
               </button>
