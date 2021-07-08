@@ -1,25 +1,39 @@
-import React, { useEffect } from 'react';
-import { Card, Col, Container, Image, Row } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Carousel, Col, Container, Image, Row } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
 import useSearchBar from '../hooks/searchBar';
 import iconShared from '../images/shareIcon.svg';
 import iconFavorite from '../images/whiteHeartIcon.svg';
 import { getMealApi, getDrinkApi } from '../services/api';
 
 export default function RecipeDetail(index) {
+  const numberDrinks = 5;
   const { selectedMeal, setSelectedMeal } = useSearchBar();
   const { location: { pathname } } = useHistory();
+  const id = pathname.split('/')[2];
+  const [selectedDrinks, setSelectedDrinks] = useState({});
+  const [ingredients, setIngredients] = useState([]);
 
   useEffect(() => {
-    const id = pathname.split('/')[2];
-    const handleState = async () => {
+    // const id = pathname.split('/')[2];
+    const handleStateMeal = async () => {
       const meals = await getMealApi(id);
-      const drinks = await getDrinkApi();
       setSelectedMeal(meals[0]);
-      console.log(drinks);
+      for (let ind = 0; ind <= 20; ind += 1) {
+        // expressão `${meals[0][`strIngredient${ind}`]}` retirada da solução do Grupo 6 - Turma 9
+        setIngredients((oldArray) => [...oldArray, `${meals[0][`strIngredient${ind}`]}`]);
+      }
     };
-    handleState();
-  }, [pathname, setSelectedMeal]);
+    handleStateMeal();
+  }, [pathname, setSelectedMeal, setSelectedDrinks, id]);
+
+  useEffect(() => {
+    const handleStateDrink = async () => {
+      const drinks = await getDrinkApi();
+      setSelectedDrinks(drinks);
+    };
+    handleStateDrink();
+  }, []);
 
   return (
     <div>
@@ -32,7 +46,7 @@ export default function RecipeDetail(index) {
       <Container>
         <Row>
           <Col>
-            <strong data-testid="recipe-title">{ selectedMeal.strMeal }</strong>
+            <h4 data-testid="recipe-title">{ selectedMeal.strMeal }</h4>
           </Col>
           <Col>
             <img
@@ -52,7 +66,16 @@ export default function RecipeDetail(index) {
       </Container>
       <p data-testid="recipe-category">{ selectedMeal.strCategory }</p>
       <ul data-testid={ `${index}-ingredient-name-and-measure` }>
-        <li>{ selectedMeal.strIngredient1 }</li>
+        {
+          (ingredients !== null && ingredients.length > 0)
+            ? ingredients.map((ingred) => {
+              if (ingred !== '' && ingred !== 'undefined' && ingred !== 'null') {
+                return (
+                  <li key={ ingred }>{ ingred }</li>
+                );
+              }
+            }) : <h4>Carregando...</h4>
+        }
       </ul>
       <p data-testid="instructions">{ selectedMeal.strInstructions }</p>
       {
@@ -63,8 +86,25 @@ export default function RecipeDetail(index) {
               title="Recipe"
           /> : null
       }
-      <Card data-testid={ `${index}-h-card` } />
-      <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
+      <Carousel data-testid={ `${index}-h-card` }>
+        { selectedDrinks !== null && selectedDrinks.length > 0
+          && selectedDrinks.map((drink, i) => {
+            if (i <= numberDrinks) {
+              return (
+                <Carousel.Item>
+                  <img
+                    src={ drink.strDrinkThumb }
+                    alt="Foto do Drink"
+                    className="d-block w-100"
+                  />
+                </Carousel.Item>
+              );
+            }
+          }) }
+      </Carousel>
+      <Link to={ `/comidas/${id}/in-progress` }>
+        <button type="button" data-testid="start-recipe-btn">Iniciar Receita</button>
+      </Link>
     </div>
   );
 }

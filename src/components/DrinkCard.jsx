@@ -8,7 +8,7 @@ export default function DrinkCard({ thumbnail, name, index }) {
       <h2 data-testid={ `${index}-card-name` }>{name}</h2>
       <img
         src={ thumbnail }
-        alt={ `foto do prato ${name}` }
+        alt={ `foto do drink ${name}` }
         data-testid={ `${index}-card-img` }
       />
     </div>

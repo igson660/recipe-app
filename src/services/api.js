@@ -87,7 +87,7 @@ export const getMealApi = async (id) => {
 };
 
 export const getDrinkApi = async () => {
-  const endpoint = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic';
+  const endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=`;
   const { drinks } = await fetch(endpoint).then((data) => data.json());
   return drinks;
 };
