@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory, Link } from 'react-router-dom';
+import useSearchBar from '../hooks/searchBar';
+import useIngredients from '../hooks/ingredients';
+import { searchRecipesByIngredients } from '../services/api';
 
 function IngredientCard({ name, index }) {
   const { location: { pathname } } = useHistory();
+  const { setRecipes } = useSearchBar();
   const [thumbnail, setThumbnail] = useState(`https://www.themealdb.com/images/ingredients/${name}-Small.png`);
   const location = pathname.split('/')[2];
+  const { setFetchingIngredients } = useIngredients();
 
   useEffect(() => {
     function checkingLocation() {
@@ -16,9 +21,17 @@ function IngredientCard({ name, index }) {
     checkingLocation();
   }, [name, pathname, location]);
 
+  async function handleClickedIngredient() {
+    setFetchingIngredients(true);
+    const data = await searchRecipesByIngredients(`/${location}`, name);
+    setRecipes(data);
+  }
+
   return (
-    <Link to={ `/${location}` }>
-      <div data-testid={ `${index}-ingredient-card` }>
+    <Link onClick={ handleClickedIngredient } to={ `/${location}` }>
+      <div
+        data-testid={ `${index}-ingredient-card` }
+      >
         <h2 data-testid={ `${index}-card-name` }>{name}</h2>
         <img
           src={ thumbnail }
