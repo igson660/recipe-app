@@ -136,7 +136,7 @@ export async function searchRecipesByCategory(pathname, category) {
   }
   try {
     const response = await
-    fetch(`https://https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
     const { drinks } = await response.json();
     return drinks;
   } catch (error) {

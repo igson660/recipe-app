@@ -10,21 +10,31 @@ import {
 
 export default function Recipes() {
   const maxNumberOfCategories = 5;
-  const { setRecipes, setLoading, categories, setCategories } = useSearchBar();
+  const { setRecipes, setLoading, categories, setCategories, buttonState,
+    setButtonState, currentCategory, setCurrentCategory } = useSearchBar();
   const { location: { pathname } } = useHistory();
 
   async function handleRecipesByCategory(category) {
+    setButtonState(!buttonState);
     setLoading(true);
     const data = await searchRecipesByCategory(pathname, category);
     setRecipes(data);
     setLoading(false);
   }
 
+  async function handleAllRecipes() {
+    setLoading(true);
+    const data = await searchRecipes(pathname);
+    setRecipes(data);
+  }
+
   useEffect(() => {
     async function handleRecipes() {
-      setLoading(true);
-      const data = await searchRecipes(pathname);
-      setRecipes(data);
+      if (!buttonState) {
+        setLoading(true);
+        const data = await searchRecipes(pathname);
+        setRecipes(data);
+      }
     }
     async function handleCategories() {
       setLoading(true);
@@ -34,23 +44,30 @@ export default function Recipes() {
     handleRecipes();
     handleCategories();
     setLoading(false);
-  }, [setLoading, pathname, setCategories, setRecipes]);
+  }, [setLoading, pathname, setCategories, setRecipes, buttonState]);
 
   return (
     <>
       <Header title="Comidas" />
       <SearchBar />
       <div>
+        <button
+          type="submit"
+          data-testid="All-category-filter"
+          onClick={ () => handleAllRecipes() }
+        >
+          All
+        </button>
         { (categories !== null && categories.length > 0)
         && categories.map((category, index) => {
           if (index < maxNumberOfCategories) {
             return (
               <button
                 key={ index }
-                type="button"
+                type="submit"
                 value={ category.strCategory }
                 data-testid={ `${category.strCategory}-category-filter` }
-                onClick={ (e) => handleRecipesByCategory(e.target.value) }
+                onClick={ ({ target }) => handleRecipesByCategory(target.value) }
               >
                 {category.strCategory}
               </button>
