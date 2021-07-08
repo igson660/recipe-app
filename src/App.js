@@ -20,6 +20,7 @@ import RecipeDone from './pages/RecipeDone';
 import RecipeFavorite from './pages/RecipeFavorite';
 import { SearchBarContextProvider } from './contexts/searchBarContext';
 import { HeaderContextProvider } from './contexts/headerContext';
+import NotFound from './components/NotFound';
 
 // verificar as rotas
 function App() {
@@ -50,6 +51,8 @@ function App() {
             component={ ExplorerRecipeIngredients }
           />
           <Route path="/explorar/bebidas" exact component={ ExplorerDrink } />
+          <Route path="/explorar/bebidas/area" exact component={ NotFound } />
+
           <Route
             path="/explorar/bebidas/ingredientes"
             component={ ExplorerDrinkIngredients }
