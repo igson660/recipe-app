@@ -24,7 +24,11 @@ export default function RecipeDetail() {
       const limit = 20;
       for (let ind = 1; ind <= limit; ind += 1) {
         if (`${meals[0][`strIngredient${ind}`]}` === ''
-        || `${meals[0][`strIngredient${ind}`]}` === null) {
+        || `${meals[0][`strIngredient${ind}`]}` === null
+        || `${meals[0][`strIngredient${ind}`]}` === undefined
+        || `${meals[0][`strIngredient${ind}`]}` === 'null'
+        || `${meals[0][`strIngredient${ind}`]}` === 'undefined'
+        ) {
           return;
         }
         setIngredientsMeal((oldArray) => [
@@ -41,6 +45,7 @@ export default function RecipeDetail() {
     const handleStateDrinkSugestions = async () => {
       const drinks = await getDrinkApiSugestions();
       setSelectedDrinksSugestions(drinks);
+      localStorage.setItem('doneRecipes', JSON.stringify([{ id: 52775 }]));
     };
     handleStateDrinkSugestions();
   }, []);
@@ -60,6 +65,14 @@ export default function RecipeDetail() {
       meals: { ...recipeInProgress.meals, [mealId]: ingredientsMeal } };
     setRecipeInProgress(newLocalStorage);
     localStorage.setItem('inProgressRecipes', JSON.stringify(newLocalStorage));
+  }
+
+  function checkRecipeDone(mealId) {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (!doneRecipes[0].id) {
+      return false;
+    }
+    return doneRecipes.find((recipe) => Number(recipe.id) === Number(mealId));
   }
 
   return (
@@ -144,11 +157,11 @@ export default function RecipeDetail() {
           }) }
       </Carousel>
       <Link to={ `/comidas/${id}/in-progress` }>
-        {
-          checkRecipeInProgress(id)
+        { !checkRecipeDone(id)
+          && (checkRecipeInProgress(id)
             ? (
               <button
-                style={ { position: 'fixed', bottom: '0' } }
+                style={ { position: 'fixed', bottom: '0', left: 0, zIndex: '10' } }
                 type="button"
                 data-testid="start-recipe-btn"
               >
@@ -156,7 +169,7 @@ export default function RecipeDetail() {
               </button>)
             : (
               <button
-                style={ { position: 'fixed', bottom: '0' } }
+                style={ { position: 'fixed', bottom: '0', right: 0, zIndex: '10' } }
                 type="button"
                 data-testid="start-recipe-btn"
                 onClick={ () => (
@@ -164,9 +177,8 @@ export default function RecipeDetail() {
                 ) }
               >
                 Iniciar Receita
-              </button>
-            )
-        }
+              </button>)
+          )}
       </Link>
       <Footer />
     </div>

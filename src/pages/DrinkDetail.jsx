@@ -23,9 +23,12 @@ export default function DrinkDetail() {
       setSelectedDrink(drinks[0]);
       const limit = 20;
       for (let ind = 1; ind <= limit; ind += 1) {
-        if (`${drinks[0][`strIngredient${ind}`]}` === null
+        if (`${drinks[0][`strIngredient${ind}`]}` === 'null'
         || `${drinks[0][`strIngredient${ind}`]}` === ''
-        || `${drinks[0][`strIngredient${ind}`]}` === undefined) {
+        || `${drinks[0][`strIngredient${ind}`]}` === 'undefined'
+        || `${drinks[0][`strIngredient${ind}`]}` === null
+        || `${drinks[0][`strIngredient${ind}`]}` === undefined
+        ) {
           return;
         }
         setIngredientsDrink((oldArray) => [
@@ -61,6 +64,14 @@ export default function DrinkDetail() {
       cocktails: { ...recipeInProgress.cocktails, [drinkId]: ingredientsDrink } };
     setRecipeInProgress(newLocalStorage);
     localStorage.setItem('inProgressRecipes', JSON.stringify(newLocalStorage));
+  }
+
+  function checkRecipeDone(mealId) {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (!doneRecipes[0].id) {
+      return false;
+    }
+    return doneRecipes.find((recipe) => Number(recipe.id) === Number(mealId));
   }
 
   return (
@@ -113,7 +124,7 @@ export default function DrinkDetail() {
             && mealsSugestions.map((meal, i) => {
               if (i <= numberMealsSugestions) {
                 return (
-                  <Carousel.Item>
+                  <Carousel.Item key={ meal.idMeal }>
                     <Link to={ `/comidas/${meal.idMeal}` }>
                       <img
                         data-testid={ `${i}-recomendation-card` }
@@ -137,11 +148,11 @@ export default function DrinkDetail() {
         }
       </Carousel>
       <Link to={ `/bebidas/${id}/in-progress` }>
-        {
-          checkRecipeInProgress(id)
+        { !checkRecipeDone(id)
+          && (checkRecipeInProgress(id)
             ? (
               <button
-                style={ { position: 'fixed', bottom: '0' } }
+                style={ { position: 'fixed', bottom: '0', left: 0, zIndex: '10' } }
                 type="button"
                 data-testid="start-recipe-btn"
               >
@@ -149,7 +160,7 @@ export default function DrinkDetail() {
               </button>)
             : (
               <button
-                style={ { position: 'fixed', bottom: '0' } }
+                style={ { position: 'fixed', bottom: '0', right: 0, zIndex: '10' } }
                 type="button"
                 data-testid="start-recipe-btn"
                 onClick={ () => (
@@ -157,9 +168,8 @@ export default function DrinkDetail() {
                 ) }
               >
                 Iniciar Receita
-              </button>
-            )
-        }
+              </button>)
+          )}
       </Link>
       <Footer />
     </div>
