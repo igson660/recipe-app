@@ -2,15 +2,16 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import useSearchBar from '../hooks/searchBar';
 import RecipeCard from './RecipeCard';
+import useHeader from '../hooks/header';
 
 export default function RecipesList() {
   const maxNumberOfRecipes = 11;
   const { recipes, loading } = useSearchBar();
+  const { toggleSearchBar } = useHeader();
 
-  if (recipes !== null && recipes.length === 1) {
+  if (recipes !== null && recipes.length === 1 && toggleSearchBar) {
     return (<Redirect to={ `/comidas/${recipes[0].idMeal}` } />);
   }
-
   return (
     <div>
       { loading && 'carregando...' }

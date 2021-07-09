@@ -5,13 +5,12 @@
   "dependencies": {
     "@sheerun/mutationobserver-shim": "^0.3.3",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^11.2.7",
+    "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
     "clipboard-copy": "^3.1.0",
     "history": "^4.7.2",
-    "jest-environment-jsdom-sixteen": "^2.0.0",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
@@ -27,7 +26,7 @@
     "cy:open": "cypress open",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
+    "test": "react-scripts test",
     "test-coverage": "react-scripts test --coverage --watchAll=false",
     "eject": "react-scripts eject",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json . --ext .js,.jsx"
@@ -49,7 +48,7 @@
   },
   "devDependencies": {
     "clipboardy": "^2.1.0",
-    "cypress": "^3.7.0",
+    "cypress": "^7.6.0",
     "cypress-multi-reporters": "^1.4.0",
     "eslint": "6.8.0",
     "eslint-config-trybe-frontend": "1.2.0",
