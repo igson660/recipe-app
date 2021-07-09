@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Carousel, Col, Container, Image, Row } from 'react-bootstrap';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Col, Container, Image, Row } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import useSearchBar from '../hooks/searchBar';
-import { getDrinkApi, getMealApiSugestions } from '../services/api';
+import { getDrinkApi } from '../services/api';
 import Footer from '../components/Footer';
-import useRecipesInProgressContext from '../hooks/mealInProgress';
 import FavoriteButton from '../components/FavoriteButton';
 import ShareButton from '../components/ShareButton';
+import VideoAndCarouselMeal from '../components/VideoAndCarouselMeal';
+import IngredientsDrink from '../components/IngredientsDrink';
+import ButtonsDrink from '../components/ButtonsDrink';
 
 export default function DrinkDetail() {
   const { location: { pathname } } = useHistory();
   const id = pathname.split('/')[2];
-  const { selectedDrink, setSelectedDrink } = useSearchBar();
-  const [ingredientsDrink, setIngredientsDrink] = useState([]);
-  const [mealsSugestions, setMealsSugestions] = useState({});
-  const numberMealsSugestions = 5;
-  const { recipeInProgress, setRecipeInProgress } = useRecipesInProgressContext();
+  const { selectedDrink,
+    setSelectedDrink, setIngredientsDrink } = useSearchBar();
 
   useEffect(() => {
     const handleStateDrink = async () => {
@@ -39,40 +38,7 @@ export default function DrinkDetail() {
       }
     };
     handleStateDrink();
-  }, [setSelectedDrink, pathname, id]);
-
-  useState(() => {
-    const handleStateMealSugestions = async () => {
-      const meals = await getMealApiSugestions();
-      setMealsSugestions(meals);
-    };
-    handleStateMealSugestions();
-  }, []);
-
-  function checkRecipeInProgress(checkId) {
-    const allRecipesInProgress = JSON.parse(localStorage
-      .getItem('inProgressRecipes')) || {};
-    if (!allRecipesInProgress.cocktails) {
-      return false;
-    }
-    return Object.keys(allRecipesInProgress.cocktails).find((key) => key === checkId);
-  }
-
-  function initialRecipe(drinkId) {
-    const newLocalStorage = {
-      ...recipeInProgress,
-      cocktails: { ...recipeInProgress.cocktails, [drinkId]: ingredientsDrink } };
-    setRecipeInProgress(newLocalStorage);
-    localStorage.setItem('inProgressRecipes', JSON.stringify(newLocalStorage));
-  }
-
-  function checkRecipeDone(mealId) {
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || {};
-    if (Object.keys(doneRecipes).length === 0) {
-      return false;
-    }
-    return doneRecipes.find((recipe) => Number(recipe.id) === Number(mealId));
-  }
+  }, [setSelectedDrink, pathname, id, setIngredientsDrink]);
 
   return (
     <div>
@@ -96,73 +62,10 @@ export default function DrinkDetail() {
         </Row>
       </Container>
       <p data-testid="recipe-category">{ selectedDrink.strAlcoholic }</p>
-      <ul>
-        {
-          (ingredientsDrink !== null && ingredientsDrink.length > 0)
-            && ingredientsDrink.map((ingred, indice) => (
-              <li
-                data-testid={ `${indice}-ingredient-name-and-measure` }
-                key={ ingred }
-              >
-                { ingred }
-              </li>
-            ))
-        }
-      </ul>
+      <IngredientsDrink />
       <p data-testid="instructions">{ selectedDrink.strInstructions }</p>
-      <Carousel>
-        {
-          mealsSugestions !== null && mealsSugestions.length > 0
-            && mealsSugestions.map((meal, i) => {
-              if (i <= numberMealsSugestions) {
-                return (
-                  <Carousel.Item key={ meal.idMeal }>
-                    <Link to={ `/comidas/${meal.idMeal}` }>
-                      <img
-                        data-testid={ `${i}-recomendation-card` }
-                        src={ meal.strMealThumb }
-                        alt="Foto Comida Sugestionada"
-                        className="d-block w-100"
-                      />
-                      <Carousel.Caption>
-                        <h3
-                          data-testid={ `${i}-recomendation-title` }
-                        >
-                          { meal.strMeal }
-                        </h3>
-                      </Carousel.Caption>
-                    </Link>
-                  </Carousel.Item>
-                );
-              }
-              return null;
-            })
-        }
-      </Carousel>
-      <Link to={ `/bebidas/${id}/in-progress` }>
-        { !checkRecipeDone(id)
-          && (checkRecipeInProgress(id)
-            ? (
-              <button
-                style={ { position: 'fixed', bottom: '0', left: 0, zIndex: '10' } }
-                type="button"
-                data-testid="start-recipe-btn"
-              >
-                Continuar Receita
-              </button>)
-            : (
-              <button
-                style={ { position: 'fixed', bottom: '0', right: 0, zIndex: '10' } }
-                type="button"
-                data-testid="start-recipe-btn"
-                onClick={ () => (
-                  initialRecipe(id)
-                ) }
-              >
-                Iniciar Receita
-              </button>)
-          )}
-      </Link>
+      <VideoAndCarouselMeal />
+      <ButtonsDrink />
       <Footer />
     </div>
   );

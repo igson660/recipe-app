@@ -9,6 +9,8 @@ export function SearchBarContextProvider({ children }) {
   const [loading, setLoading] = useState(false);
   const [selectedDrink, setSelectedDrink] = useState({});
   const [ingredientsMeal, setIngredientsMeal] = useState([]);
+  const [ingredientsDrink, setIngredientsDrink] = useState([]);
+
 
   return (
     <SearchBarContext.Provider
@@ -23,6 +25,8 @@ export function SearchBarContextProvider({ children }) {
         setSelectedDrink,
         ingredientsMeal,
         setIngredientsMeal,
+        ingredientsDrink,
+        setIngredientsDrink,
       } }
     >
       {children}
