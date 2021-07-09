@@ -5,6 +5,7 @@ import Footer from '../components/Footer';
 import SearchBar from '../components/SearchBar';
 import RecipesList from '../components/RecipesList';
 import useSearchBar from '../hooks/searchBar';
+import useIngredients from '../hooks/ingredients';
 import {
   searchRecipes, searchCategories, searchRecipesByCategory } from '../services/api';
 
@@ -13,6 +14,7 @@ export default function Recipes() {
   const { setRecipes, setLoading, categories, setCategories,
     currentCategory, setCurrentCategory } = useSearchBar();
   const { location: { pathname } } = useHistory();
+  const { fetchingIngredients } = useIngredients();
 
   async function handleClick(category) {
     setCurrentCategory(category);
@@ -47,10 +49,12 @@ export default function Recipes() {
       const data = await searchCategories(pathname);
       setCategories(data);
     }
-    handleRecipes();
+    if (!fetchingIngredients) {
+      handleRecipes();
+    }
     handleCategories();
     setLoading(false);
-  }, [setLoading, pathname, setCategories, setRecipes]);
+  }, [setLoading, pathname, setCategories, setRecipes, fetchingIngredients]);
 
   return (
     <>

@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Container, Row, Col, Image } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Container, Row, Col, Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import iconProfile from '../images/profileIcon.svg';
 import iconSearch from '../images/searchIcon.svg';
