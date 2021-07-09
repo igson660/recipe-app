@@ -20,6 +20,7 @@ import RecipeDone from './pages/RecipeDone';
 import RecipeFavorite from './pages/RecipeFavorite';
 import { SearchBarContextProvider } from './contexts/searchBarContext';
 import { HeaderContextProvider } from './contexts/headerContext';
+import { RecipesInProgressContextProvider } from './contexts/recipesInProgressContext';
 
 // verificar as rotas
 function App() {
@@ -27,36 +28,38 @@ function App() {
     <Switch>
       <HeaderContextProvider>
         <SearchBarContextProvider>
-          <Route path="/" exact component={ Login } />
-          <Route path="/comidas" exact component={ Recipes } />
-          <Route path="/comidas/:id" exact component={ RecipeDetail } />
-          <Route
-            path="/comidas/:id/in-progress"
-            exact
-            component={ RecipeDetailProgress }
-          />
-          <Route path="/bebidas" exact component={ Drinks } />
-          <Route path="/bebidas/:id" exact component={ DrinkDetail } />
-          <Route
-            path="/bebidas/:id/in-progress"
-            exact
-            component={ DrinkDetailProgress }
-          />
-          <Route path="/explorar" exact component={ Explorer } />
-          <Route path="/explorar/comidas" exact component={ ExplorerRecipe } />
-          <Route path="/explorar/comidas/area" exact component={ ExplorerRecipeArea } />
-          <Route
-            path="/explorar/comidas/ingredientes"
-            component={ ExplorerRecipeIngredients }
-          />
-          <Route path="/explorar/bebidas" exact component={ ExplorerDrink } />
-          <Route
-            path="/explorar/bebidas/ingredientes"
-            component={ ExplorerDrinkIngredients }
-          />
-          <Route path="/perfil" exact component={ Profile } />
-          <Route path="/receitas-feitas" exact component={ RecipeDone } />
-          <Route path="/receitas-favoritas" exact component={ RecipeFavorite } />
+          <RecipesInProgressContextProvider>
+            <Route path="/" exact component={ Login } />
+            <Route path="/comidas" exact component={ Recipes } />
+            <Route path="/comidas/:id" exact component={ RecipeDetail } />
+            <Route
+              path="/comidas/:id/in-progress"
+              exact
+              component={ RecipeDetailProgress }
+            />
+            <Route path="/bebidas" exact component={ Drinks } />
+            <Route path="/bebidas/:id" exact component={ DrinkDetail } />
+            <Route
+              path="/bebidas/:id/in-progress"
+              exact
+              component={ DrinkDetailProgress }
+            />
+            <Route path="/explorar" exact component={ Explorer } />
+            <Route path="/explorar/comidas" exact component={ ExplorerRecipe } />
+            <Route path="/explorar/comidas/area" exact component={ ExplorerRecipeArea } />
+            <Route
+              path="/explorar/comidas/ingredientes"
+              component={ ExplorerRecipeIngredients }
+            />
+            <Route path="/explorar/bebidas" exact component={ ExplorerDrink } />
+            <Route
+              path="/explorar/bebidas/ingredientes"
+              component={ ExplorerDrinkIngredients }
+            />
+            <Route path="/perfil" exact component={ Profile } />
+            <Route path="/receitas-feitas" exact component={ RecipeDone } />
+            <Route path="/receitas-favoritas" exact component={ RecipeFavorite } />
+          </RecipesInProgressContextProvider>
         </SearchBarContextProvider>
       </HeaderContextProvider>
     </Switch>
