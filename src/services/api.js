@@ -183,3 +183,27 @@ export async function getIngredients(pathname) {
     return null;
   }
 }
+
+export const getMealApi = async (id) => {
+  const endpoint = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const { meals } = await fetch(endpoint).then((data) => data.json());
+  return meals;
+};
+
+export const getMealApiSugestions = async () => {
+  const endpoint = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
+  const { meals } = await fetch(endpoint).then((data) => data.json());
+  return meals;
+};
+
+export const getDrinkApi = async (id) => {
+  const endpoint = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+  const { drinks } = await fetch(endpoint).then((data) => data.json());
+  return drinks;
+};
+
+export const getDrinkApiSugestions = async () => {
+  const endpoint = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+  const { drinks } = await fetch(endpoint).then((data) => data.json());
+  return drinks;
+};

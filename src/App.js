@@ -18,14 +18,13 @@ import ExplorerDrinkIngredients from './pages/ExplorerDrinkIngredients';
 import Profile from './pages/Profile';
 import RecipeDone from './pages/RecipeDone';
 import RecipeFavorite from './pages/RecipeFavorite';
+import RootProvider from './contexts/RootProvider';
 import NotFound from './components/NotFound';
-import { IngredientsContextProvider } from './contexts/ingredientsContext';
-
 // verificar as rotas
 function App() {
   return (
     <Switch>
-      <IngredientsContextProvider>
+      <RootProvider>
         <Route path="/" exact component={ Login } />
         <Route path="/comidas" exact component={ Recipes } />
         <Route path="/comidas/:id" exact component={ RecipeDetail } />
@@ -57,7 +56,7 @@ function App() {
         <Route path="/perfil" exact component={ Profile } />
         <Route path="/receitas-feitas" exact component={ RecipeDone } />
         <Route path="/receitas-favoritas" exact component={ RecipeFavorite } />
-      </IngredientsContextProvider>
+      </RootProvider>
     </Switch>
   );
 }
