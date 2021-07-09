@@ -10,7 +10,6 @@ export default function RecipeCard({ thumbnail, name, index }) {
         alt={ `foto do prato ${name}` }
         data-testid={ `${index}-card-img` }
       />
-      )
     </div>
   );
 }
