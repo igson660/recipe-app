@@ -32,6 +32,10 @@ function FavoriteButton() {
         image: selectedMeal.strMealThumb,
       };
     }
+    setFavoriteObjects(favoriteObject);
+  }, [selectedDrink, selectedMeal, typeRecipe]);
+
+  useEffect(() => {
     function checkFavorite() {
       const localStorageFavorite = JSON
         .parse(localStorage.getItem('favoriteRecipes')) || [];
@@ -39,9 +43,8 @@ function FavoriteButton() {
         .find((recipe) => recipe.id === favoriteObjects.id);
       setFavorite(isFavorite);
     }
-    setFavoriteObjects(favoriteObject);
     checkFavorite();
-  }, [selectedDrink, selectedMeal, favoriteObjects, typeRecipe]);
+  }, [favoriteObjects]);
 
   function handleFavoriteButton() {
     const newValueFavorite = !favorite;
@@ -66,13 +69,13 @@ function FavoriteButton() {
 
   return (
     <button
-      data-testid="favorite-btn"
       type="button"
       onClick={ () => handleFavoriteButton() }
     >
       <img
         src={ favorite ? iconFavoriteBlack : iconFavoriteWhite }
         alt="Clique para Favoritar esta Receita"
+        data-testid="favorite-btn"
       />
     </button>
   );
