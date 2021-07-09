@@ -143,3 +143,22 @@ export async function searchRecipesByCategory(pathname, category) {
     return null;
   }
 }
+
+export async function getIngredients(pathname) {
+  if (pathname === 'comidas') {
+    try {
+      const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?i=list');
+      const { meals } = await response.json();
+      return meals;
+    } catch (error) {
+      return null;
+    }
+  }
+  try {
+    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list');
+    const { drinks } = await response.json();
+    return drinks;
+  } catch (error) {
+    return null;
+  }
+}
