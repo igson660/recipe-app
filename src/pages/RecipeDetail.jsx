@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { Carousel, Col, Container, Image, Row } from 'react-bootstrap';
+import React, { useEffect } from 'react';
+import { Col, Container, Image, Row } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import useSearchBar from '../hooks/searchBar';
-import iconShared from '../images/shareIcon.svg';
-import iconFavorite from '../images/whiteHeartIcon.svg';
-import { getMealApi, getDrinkApiSugestions } from '../services/api';
+import { getMealApi } from '../services/api';
 import useRecipesInProgressContext from '../hooks/mealInProgress';
 import Footer from '../components/Footer';
+import IngredientsMeal from '../components/IngredientsMeal';
+import CarouselDrink from '../components/VideoAndCarouselDrink';
+import ShareButton from '../components/ShareButton';
+import FavoriteButton from '../components/FavoriteButton';
 
 export default function RecipeDetail() {
-  const numberDrinksSugestions = 5;
-  const { selectedMeal, setSelectedMeal } = useSearchBar();
-  const { location: { pathname } } = useHistory();
+  const { selectedMeal,
+    setSelectedMeal, ingredientsMeal, setIngredientsMeal } = useSearchBar();
+  const history = useHistory();
+  const { location: { pathname } } = history;
   const id = pathname.split('/')[2];
-  const [selectedDrinksSugestions, setSelectedDrinksSugestions] = useState({});
-  const [ingredientsMeal, setIngredientsMeal] = useState([]);
   const { recipeInProgress, setRecipeInProgress } = useRecipesInProgressContext();
 
   useEffect(() => {
@@ -39,16 +40,7 @@ export default function RecipeDetail() {
       }
     };
     handleStateMeal();
-  }, [pathname, setSelectedMeal, setSelectedDrinksSugestions, id]);
-
-  useEffect(() => {
-    const handleStateDrinkSugestions = async () => {
-      const drinks = await getDrinkApiSugestions();
-      setSelectedDrinksSugestions(drinks);
-      localStorage.setItem('doneRecipes', JSON.stringify([{ id: 52775 }]));
-    };
-    handleStateDrinkSugestions();
-  }, []);
+  }, [pathname, setSelectedMeal, id, setIngredientsMeal]);
 
   function checkRecipeInProgress(checkId) {
     const allRecipesInProgress = JSON.parse(localStorage
@@ -68,8 +60,8 @@ export default function RecipeDetail() {
   }
 
   function checkRecipeDone(mealId) {
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-    if (!doneRecipes[0].id) {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || {};
+    if (Object.keys(doneRecipes).length === 0) {
       return false;
     }
     return doneRecipes.find((recipe) => Number(recipe.id) === Number(mealId));
@@ -89,73 +81,17 @@ export default function RecipeDetail() {
             <h3 data-testid="recipe-title">{ selectedMeal.strMeal }</h3>
           </Col>
           <Col>
-            <img
-              src={ iconShared }
-              alt="Compartilhar Receita"
-              data-testid="share-btn"
-            />
+            <ShareButton />
           </Col>
           <Col>
-            <img
-              src={ iconFavorite }
-              alt="Clique para Favoritar esta Receita"
-              data-testid="favorite-btn"
-            />
+            <FavoriteButton />
           </Col>
         </Row>
       </Container>
       <p data-testid="recipe-category">{ selectedMeal.strCategory }</p>
-      <ul>
-        {
-          (ingredientsMeal !== null && ingredientsMeal.length > 0)
-            && ingredientsMeal.map((ingred, indice) => (
-              <li
-                data-testid={ `${indice - 1}-ingredient-name-and-measure` }
-                key={ ingred }
-              >
-                { ingred }
-              </li>
-            ))
-        }
-      </ul>
+      <IngredientsMeal />
       <p data-testid="instructions">{ selectedMeal.strInstructions }</p>
-      {
-        (selectedMeal.strYoutube !== undefined)
-          ? (
-            <iframe
-              data-testid="video"
-              src={ selectedMeal.strYoutube.replace('watch?v=', 'embed/') }
-              title="Recipe"
-            />
-          ) : null
-      }
-      <Carousel>
-        { selectedDrinksSugestions !== null && selectedDrinksSugestions.length > 0
-          && selectedDrinksSugestions.map((drink, i) => {
-            if (i <= numberDrinksSugestions) {
-              return (
-                <Carousel.Item key={ drink.idDrink }>
-                  <Link to={ `/bebidas/${drink.idDrink}` }>
-                    <img
-                      data-testid={ `${i}-recomendation-card` }
-                      src={ drink.strDrinkThumb }
-                      alt="Foto do Drink"
-                      className="d-block w-100"
-                    />
-                    <Carousel.Caption>
-                      <h3
-                        data-testid={ `${i}-recomendation-title` }
-                      >
-                        { drink.strDrink }
-                      </h3>
-                    </Carousel.Caption>
-                  </Link>
-                </Carousel.Item>
-              );
-            }
-            return null;
-          }) }
-      </Carousel>
+      <CarouselDrink />
       <Link to={ `/comidas/${id}/in-progress` }>
         { !checkRecipeDone(id)
           && (checkRecipeInProgress(id)

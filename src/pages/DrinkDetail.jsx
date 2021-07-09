@@ -3,10 +3,10 @@ import { Carousel, Col, Container, Image, Row } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import useSearchBar from '../hooks/searchBar';
 import { getDrinkApi, getMealApiSugestions } from '../services/api';
-import iconShared from '../images/shareIcon.svg';
-import iconFavorite from '../images/whiteHeartIcon.svg';
 import Footer from '../components/Footer';
 import useRecipesInProgressContext from '../hooks/mealInProgress';
+import FavoriteButton from '../components/FavoriteButton';
+import ShareButton from '../components/ShareButton';
 
 export default function DrinkDetail() {
   const { location: { pathname } } = useHistory();
@@ -67,8 +67,8 @@ export default function DrinkDetail() {
   }
 
   function checkRecipeDone(mealId) {
-    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
-    if (!doneRecipes[0].id) {
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || {};
+    if (Object.keys(doneRecipes).length === 0) {
       return false;
     }
     return doneRecipes.find((recipe) => Number(recipe.id) === Number(mealId));
@@ -88,18 +88,10 @@ export default function DrinkDetail() {
             <h3 data-testid="recipe-title">{ selectedDrink.strDrink }</h3>
           </Col>
           <Col>
-            <img
-              data-testid="share-btn"
-              src={ iconShared }
-              alt="Compartilhar Drink"
-            />
+            <ShareButton />
           </Col>
           <Col>
-            <img
-              src={ iconFavorite }
-              alt="Clique para Favoritar esta Receita"
-              data-testid="favorite-btn"
-            />
+            <FavoriteButton />
           </Col>
         </Row>
       </Container>
