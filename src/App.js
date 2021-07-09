@@ -19,7 +19,7 @@ import Profile from './pages/Profile';
 import RecipeDone from './pages/RecipeDone';
 import RecipeFavorite from './pages/RecipeFavorite';
 import RootProvider from './contexts/RootProvider';
-
+import NotFound from './components/NotFound';
 // verificar as rotas
 function App() {
   return (
@@ -48,6 +48,7 @@ function App() {
           component={ ExplorerRecipeIngredients }
         />
         <Route path="/explorar/bebidas" exact component={ ExplorerDrink } />
+        <Route path="/explorar/bebidas/area" exact component={ NotFound } />
         <Route
           path="/explorar/bebidas/ingredientes"
           component={ ExplorerDrinkIngredients }

@@ -145,6 +145,26 @@ export async function searchRecipesByCategory(pathname, category) {
   }
 }
 
+export async function getMealsAreas() {
+  try {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?a=list');
+    const { meals } = await response.json();
+    return meals;
+  } catch (error) {
+    return null;
+  }
+}
+
+export async function fetchMealsByArea(area) {
+  try {
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`);
+    const { meals } = await response.json();
+    return meals;
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function getIngredients(pathname) {
   if (pathname === 'comidas') {
     try {
