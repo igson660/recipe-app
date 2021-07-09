@@ -32,8 +32,17 @@ function FavoriteButton() {
         image: selectedMeal.strMealThumb,
       };
     }
+    function checkFavorite() {
+      const localStorageFavorite = JSON
+        .parse(localStorage.getItem('favoriteRecipes')) || [];
+      const isFavorite = localStorageFavorite
+        .find((recipe) => recipe.id === favoriteObjects.id);
+      setFavorite(isFavorite);
+    }
     setFavoriteObjects(favoriteObject);
-  }, [selectedDrink, selectedMeal, typeRecipe]);
+    checkFavorite();
+  }, [selectedDrink, selectedMeal, favoriteObjects, typeRecipe]);
+
   function handleFavoriteButton() {
     const newValueFavorite = !favorite;
     setFavorite(newValueFavorite);

@@ -101,7 +101,7 @@ export default function DrinkDetail() {
           (ingredientsDrink !== null && ingredientsDrink.length > 0)
             && ingredientsDrink.map((ingred, indice) => (
               <li
-                data-testid={ `${indice - 1}-ingredient-name-and-measure` }
+                data-testid={ `${indice}-ingredient-name-and-measure` }
                 key={ ingred }
               >
                 { ingred }

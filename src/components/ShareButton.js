@@ -15,12 +15,11 @@ function ShareButton() {
   }
 
   return (
-    <>
-      <button data-testid="share-btn" type="button" onClick={ () => handleShareButton() }>
-        <img src={ iconShared } alt="Compartilhar Receita" />
-      </button>
-      { copyClipboard && <span>Link copiado!</span> }
-    </>
+    <button data-testid="share-btn" type="button" onClick={ () => handleShareButton() }>
+      { copyClipboard
+        ? <span>Link copiado!</span>
+        : <img src={ iconShared } alt="Compartilhar Receita" />}
+    </button>
   );
 }
 
