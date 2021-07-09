@@ -160,7 +160,11 @@ export async function fetchMealsByArea(area) {
     const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`);
     const { meals } = await response.json();
     return meals;
-  
+  } catch (error) {
+    return null;
+  }
+}
+
 export async function getIngredients(pathname) {
   if (pathname === 'comidas') {
     try {
