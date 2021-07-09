@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Carousel, Col, Container, Image, Row } from 'react-bootstrap';
-import { Link, Redirect, useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import useSearchBar from '../hooks/searchBar';
 import iconShared from '../images/shareIcon.svg';
 import iconFavorite from '../images/whiteHeartIcon.svg';
 import { getMealApi, getDrinkApiSugestions } from '../services/api';
 import useRecipesInProgressContext from '../hooks/mealInProgress';
+import Footer from '../components/Footer';
 
 export default function RecipeDetail() {
   const numberDrinksSugestions = 5;
@@ -21,12 +22,16 @@ export default function RecipeDetail() {
       const meals = await getMealApi(id);
       setSelectedMeal(meals[0]);
       const limit = 20;
-      for (let ind = 0; ind <= limit; ind += 1) {
-        // expressão `${meals[0][`strIngredient${ind}`]}` retirada da solução do Grupo 6 - Turma 9
+      for (let ind = 1; ind <= limit; ind += 1) {
+        if (`${meals[0][`strIngredient${ind}`]}` === ''
+        || `${meals[0][`strIngredient${ind}`]}` === null) {
+          return;
+        }
         setIngredientsMeal((oldArray) => [
           ...oldArray,
           `${meals[0][`strIngredient${ind}`]} - ${meals[0][`strMeasure${ind}`]}`,
         ]);
+        // expressão `${meals[0][`strIngredient${ind}`]}` retirada da solução do Grupo 6 - Turma 9
       }
     };
     handleStateMeal();
@@ -43,16 +48,18 @@ export default function RecipeDetail() {
   function checkRecipeInProgress(checkId) {
     const allRecipesInProgress = JSON.parse(localStorage
       .getItem('inProgressRecipes')) || {};
-    if (allRecipesInProgress === {}) return false;
+    if (!allRecipesInProgress.meals) {
+      return false;
+    }
     return Object.keys(allRecipesInProgress.meals).find((key) => key === checkId);
-    // return setRecipeInProgress(allRecipesInProgress);
   }
 
   function initialRecipe(mealId) {
-    setRecipeInProgress({
+    const newLocalStorage = {
       ...recipeInProgress,
-      meals: { ...recipeInProgress.meals, [mealId]: ingredientsMeal } });
-    localStorage.setItem('inProgressRecipes', JSON.stringify(recipeInProgress));
+      meals: { ...recipeInProgress.meals, [mealId]: ingredientsMeal } };
+    setRecipeInProgress(newLocalStorage);
+    localStorage.setItem('inProgressRecipes', JSON.stringify(newLocalStorage));
   }
 
   return (
@@ -80,7 +87,6 @@ export default function RecipeDetail() {
               src={ iconFavorite }
               alt="Clique para Favoritar esta Receita"
               data-testid="favorite-btn"
-              // onClick={ () => setSelectedMeal({ ...selectedMeal, favorite: true }) }
             />
           </Col>
         </Row>
@@ -89,21 +95,14 @@ export default function RecipeDetail() {
       <ul>
         {
           (ingredientsMeal !== null && ingredientsMeal.length > 0)
-            ? ingredientsMeal.map((ingred, indice) => {
-              if (ingred !== ' - ' && ingred !== ' -  '
-                && ingred !== 'undefined - undefined'
-                && ingred !== 'null - null') {
-                return (
-                  <li
-                    data-testid={ `${indice - 1}-ingredient-name-and-measure` }
-                    key={ ingred }
-                  >
-                    { ingred }
-                  </li>
-                );
-              }
-              return null;
-            }) : <h3>Carregando...</h3>
+            && ingredientsMeal.map((ingred, indice) => (
+              <li
+                data-testid={ `${indice - 1}-ingredient-name-and-measure` }
+                key={ ingred }
+              >
+                { ingred }
+              </li>
+            ))
         }
       </ul>
       <p data-testid="instructions">{ selectedMeal.strInstructions }</p>
@@ -122,7 +121,7 @@ export default function RecipeDetail() {
           && selectedDrinksSugestions.map((drink, i) => {
             if (i <= numberDrinksSugestions) {
               return (
-                <Carousel.Item>
+                <Carousel.Item key={ drink.idDrink }>
                   <Link to={ `/bebidas/${drink.idDrink}` }>
                     <img
                       data-testid={ `${i}-recomendation-card` }
@@ -149,7 +148,7 @@ export default function RecipeDetail() {
           checkRecipeInProgress(id)
             ? (
               <button
-                // style={ { position: 'fixed' } }
+                style={ { position: 'fixed', bottom: '0' } }
                 type="button"
                 data-testid="start-recipe-btn"
               >
@@ -157,7 +156,7 @@ export default function RecipeDetail() {
               </button>)
             : (
               <button
-                // style={ { position: 'fixed' } }
+                style={ { position: 'fixed', bottom: '0' } }
                 type="button"
                 data-testid="start-recipe-btn"
                 onClick={ () => (
@@ -169,6 +168,7 @@ export default function RecipeDetail() {
             )
         }
       </Link>
+      <Footer />
     </div>
   );
 }

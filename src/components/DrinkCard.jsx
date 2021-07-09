@@ -22,4 +22,5 @@ DrinkCard.propTypes = {
   index: PropTypes.number,
   name: PropTypes.string,
   thumbnail: PropTypes.string,
+  id: PropTypes.string,
 }.isRequired;

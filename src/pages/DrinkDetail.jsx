@@ -6,6 +6,7 @@ import { getDrinkApi, getMealApiSugestions } from '../services/api';
 import iconShared from '../images/shareIcon.svg';
 import iconFavorite from '../images/whiteHeartIcon.svg';
 import Footer from '../components/Footer';
+import useRecipesInProgressContext from '../hooks/mealInProgress';
 
 export default function DrinkDetail() {
   const { location: { pathname } } = useHistory();
@@ -14,16 +15,24 @@ export default function DrinkDetail() {
   const [ingredientsDrink, setIngredientsDrink] = useState([]);
   const [mealsSugestions, setMealsSugestions] = useState({});
   const numberMealsSugestions = 5;
+  const { recipeInProgress, setRecipeInProgress } = useRecipesInProgressContext();
 
   useEffect(() => {
     const handleStateDrink = async () => {
       const drinks = await getDrinkApi(id);
       setSelectedDrink(drinks[0]);
       const limit = 20;
-      for (let ind = 0; ind <= limit; ind += 1) {
-        setIngredientsDrink((oldValue) => [
-          ...oldValue,
-          `${drinks[0][`strIngredient${ind}`]} - ${drinks[0][`strMeasure${ind}`]}`]);
+      for (let ind = 1; ind <= limit; ind += 1) {
+        if (`${drinks[0][`strIngredient${ind}`]}` === null
+        || `${drinks[0][`strIngredient${ind}`]}` === ''
+        || `${drinks[0][`strIngredient${ind}`]}` === undefined) {
+          return;
+        }
+        setIngredientsDrink((oldArray) => [
+          ...oldArray,
+          `${drinks[0][`strIngredient${ind}`]} - ${drinks[0][`strMeasure${ind}`]}`,
+        ]);
+        // expressão `${meals[0][`strIngredient${ind}`]}` retirada da solução do Grupo 6 - Turma 9
       }
     };
     handleStateDrink();
@@ -36,6 +45,23 @@ export default function DrinkDetail() {
     };
     handleStateMealSugestions();
   }, []);
+
+  function checkRecipeInProgress(checkId) {
+    const allRecipesInProgress = JSON.parse(localStorage
+      .getItem('inProgressRecipes')) || {};
+    if (!allRecipesInProgress.cocktails) {
+      return false;
+    }
+    return Object.keys(allRecipesInProgress.cocktails).find((key) => key === checkId);
+  }
+
+  function initialRecipe(drinkId) {
+    const newLocalStorage = {
+      ...recipeInProgress,
+      cocktails: { ...recipeInProgress.cocktails, [drinkId]: ingredientsDrink } };
+    setRecipeInProgress(newLocalStorage);
+    localStorage.setItem('inProgressRecipes', JSON.stringify(newLocalStorage));
+  }
 
   return (
     <div>
@@ -68,21 +94,17 @@ export default function DrinkDetail() {
       </Container>
       <p data-testid="recipe-category">{ selectedDrink.strAlcoholic }</p>
       <ul>
-        { (ingredientsDrink !== null && ingredientsDrink.length > 0)
-          ? ingredientsDrink.map((ingred, indice) => {
-            if (ingred !== ' - ' && ingred !== 'null - null'
-              && ingred !== 'undefined - undefined') {
-              return (
-                <li
-                  data-testid={ `${indice - 1}-ingredient-name-and-measure` }
-                  key={ ingred }
-                >
-                  { ingred }
-                </li>
-              );
-            }
-            return null;
-          }) : <h3>Carregando...</h3>}
+        {
+          (ingredientsDrink !== null && ingredientsDrink.length > 0)
+            && ingredientsDrink.map((ingred, indice) => (
+              <li
+                data-testid={ `${indice - 1}-ingredient-name-and-measure` }
+                key={ ingred }
+              >
+                { ingred }
+              </li>
+            ))
+        }
       </ul>
       <p data-testid="instructions">{ selectedDrink.strInstructions }</p>
       <Carousel>
@@ -114,13 +136,31 @@ export default function DrinkDetail() {
             })
         }
       </Carousel>
-      <button
-        style={ { position: 'fixed' } }
-        type="button"
-        data-testid="start-recipe-btn"
-      >
-        Iniciar Receita
-      </button>
+      <Link to={ `/bebidas/${id}/in-progress` }>
+        {
+          checkRecipeInProgress(id)
+            ? (
+              <button
+                style={ { position: 'fixed', bottom: '0' } }
+                type="button"
+                data-testid="start-recipe-btn"
+              >
+                Continuar Receita
+              </button>)
+            : (
+              <button
+                style={ { position: 'fixed', bottom: '0' } }
+                type="button"
+                data-testid="start-recipe-btn"
+                onClick={ () => (
+                  initialRecipe(id)
+                ) }
+              >
+                Iniciar Receita
+              </button>
+            )
+        }
+      </Link>
       <Footer />
     </div>
   );
