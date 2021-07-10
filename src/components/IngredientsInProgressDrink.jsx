@@ -1,5 +1,6 @@
 import React from 'react';
 import useSearchBar from '../hooks/searchBar';
+import IngredientBox from './IngredientBox';
 
 function IngredientsInProgressDrink() {
   const { ingredientsDrink } = useSearchBar();
@@ -8,19 +9,11 @@ function IngredientsInProgressDrink() {
       {
         (ingredientsDrink !== null && ingredientsDrink.length > 0)
             && ingredientsDrink.map((ingred, indice) => (
-              <label
+              <IngredientBox
                 key={ ingred }
-                htmlFor={ `${indice}-ingredient-step` }
-                data-testid={ `${indice}-ingredient-step` }
-              >
-                <input
-                  id={ `${indice}-ingredient-step` }
-                  name={ `${indice}-ingredient-step` }
-                  type="checkbox"
-                  key={ ingred }
-                />
-                { ingred }
-              </label>
+                ingredient={ ingred }
+                index={ indice }
+              />
             ))
       }
     </ul>

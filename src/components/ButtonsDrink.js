@@ -1,11 +1,9 @@
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import useRecipesInProgressContext from '../hooks/mealInProgress';
-import useSearchBar from '../hooks/searchBar';
 
 function ButtonsDrink() {
   const { recipeInProgress, setRecipeInProgress } = useRecipesInProgressContext();
-  const { ingredientsDrink } = useSearchBar();
   const history = useHistory();
   const { location: { pathname } } = history;
   const id = pathname.split('/')[2];
@@ -19,9 +17,12 @@ function ButtonsDrink() {
   }
 
   function initialRecipe(drinkId) {
+    const allRecipesInProgress = JSON.parse(localStorage
+      .getItem('inProgressRecipes')) || {};
+    if (!allRecipesInProgress.meals) return;
     const newLocalStorage = {
-      ...recipeInProgress,
-      cocktails: { ...recipeInProgress.cocktails, [drinkId]: ingredientsDrink } };
+      ...allRecipesInProgress,
+      cocktails: { ...recipeInProgress.cocktails, [drinkId]: [] } };
     setRecipeInProgress(newLocalStorage);
     localStorage.setItem('inProgressRecipes', JSON.stringify(newLocalStorage));
   }
