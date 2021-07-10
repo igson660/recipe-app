@@ -8,11 +8,14 @@ function IngredientsInProgressMeal() {
       {
         (ingredientsMeal !== null && ingredientsMeal.length > 0)
             && ingredientsMeal.map((ingred, indice) => (
-              <label key={ ingred } htmlFor={ `${indice}-ingredient-step` }>
+              <label
+                key={ ingred }
+                htmlFor={ `${indice}-ingredient-step` }
+                data-testid={ `${indice}-ingredient-step` }
+              >
                 <input
                   name={ `${indice}-ingredient-step` }
                   type="checkbox"
-                  data-testid={ `${indice}-ingredient-step` }
                   key={ ingred }
                 />
                 { ingred }
