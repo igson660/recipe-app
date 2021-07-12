@@ -35,7 +35,6 @@ export default function RecipeDetail() {
           ...oldArray,
           `${meals[0][`strIngredient${ind}`]} - ${meals[0][`strMeasure${ind}`]}`,
         ]);
-        // expressão `${meals[0][`strIngredient${ind}`]}` retirada da solução do Grupo 6 - Turma 9
       }
     };
     handleStateMeal();

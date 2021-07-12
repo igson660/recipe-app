@@ -34,7 +34,6 @@ export default function DrinkDetail() {
           ...oldArray,
           `${drinks[0][`strIngredient${ind}`]} - ${drinks[0][`strMeasure${ind}`]}`,
         ]);
-        // expressão `${meals[0][`strIngredient${ind}`]}` retirada da solução do Grupo 6 - Turma 9
       }
     };
     handleStateDrink();

@@ -1,11 +1,7 @@
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import useRecipesInProgressContext from '../hooks/mealInProgress';
-import useSearchBar from '../hooks/searchBar';
 
 function ButtonsMeal() {
-  const { recipeInProgress, setRecipeInProgress } = useRecipesInProgressContext();
-  const { ingredientsMeal } = useSearchBar();
   const history = useHistory();
   const { location: { pathname } } = history;
   const id = pathname.split('/')[2];
@@ -16,14 +12,6 @@ function ButtonsMeal() {
       return false;
     }
     return Object.keys(allRecipesInProgress.meals).find((key) => key === checkId);
-  }
-
-  function initialRecipe(mealId) {
-    const newLocalStorage = {
-      ...recipeInProgress,
-      meals: { ...recipeInProgress.meals, [mealId]: ingredientsMeal } };
-    setRecipeInProgress(newLocalStorage);
-    localStorage.setItem('inProgressRecipes', JSON.stringify(newLocalStorage));
   }
 
   function checkRecipeDone(mealId) {
@@ -51,9 +39,6 @@ function ButtonsMeal() {
                 style={ { position: 'fixed', bottom: '0', right: 0, zIndex: '10' } }
                 type="button"
                 data-testid="start-recipe-btn"
-                onClick={ () => (
-                  initialRecipe(id)
-                ) }
               >
                 Iniciar Receita
               </button>)
