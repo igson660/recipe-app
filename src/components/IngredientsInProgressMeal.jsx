@@ -11,6 +11,12 @@ function IngredientsInProgressMeal({ isFinished }) {
   const id = pathname.split('/')[2];
   const localStorageKey = 'meals';
 
+  function verifyChecked(action) {
+    if (action === 'add') setCheckedIngredients((old) => old + 1);
+    if (action === 'subtract') setCheckedIngredients((old) => old - 1);
+    if (checkedIngredients === ingredientsMeal.length - 1) isFinished(true);
+  }
+
   useEffect(() => {
     const allInProgressRecipes = JSON
       .parse(localStorage.getItem('inProgressRecipes')) || {};
@@ -19,13 +25,9 @@ function IngredientsInProgressMeal({ isFinished }) {
       .entries(allInProgressRecipes[localStorageKey])
       .find((values) => values[0] === id);
     setCheckedIngredients(recipeInProgress[1].length);
+    if (recipeInProgress[1].length) isFinished(true);
   }, []);
 
-  function verifyChecked(action) {
-    if (action === 'add') setCheckedIngredients((old) => old + 1);
-    if (action === 'subtract') setCheckedIngredients((old) => old - 1);
-    if (checkedIngredients === ingredientsMeal.length - 1) isFinished(true);
-  }
   return (
     <ul>
       {

@@ -19,6 +19,7 @@ function IngredientsInProgressDrink({ isFinished }) {
       .entries(allInProgressRecipes[localStorageKey])
       .find((values) => values[0] === id);
     setCheckedIngredients(recipeInProgress[1].length);
+    if (recipeInProgress[1].length) isFinished(true);
   }, []);
 
   function verifyChecked(action) {
