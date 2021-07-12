@@ -38,6 +38,7 @@ function RecipeDetailProgress() {
     };
     handleStateMeal();
   }, [pathname, setSelectedMeal, id, setIngredientsMeal]);
+
   return (
     <div>
       <Image

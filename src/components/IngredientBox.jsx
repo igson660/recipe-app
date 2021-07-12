@@ -13,19 +13,34 @@ function IngredientBox({ index, ingredient }) {
   useEffect(() => {
     const allInProgressRecipes = JSON
       .parse(localStorage.getItem('inProgressRecipes')) || {};
-    if (!allInProgressRecipes.meals && !allInProgressRecipes.cocktails) return;
+    if (!allInProgressRecipes.meals && typeOfRecipe === 'comidas') {
+      const initialStorage = {
+        ...allInProgressRecipes,
+        meals: { [id]: [] },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(initialStorage));
+      return;
+    }
+    if (!allInProgressRecipes.cocktails && typeOfRecipe === 'bebidas') {
+      const initialStorage = {
+        ...allInProgressRecipes,
+        cocktails: { [id]: [] },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(initialStorage));
+      return;
+    }
     const recipeInProgress = Object
       .entries(allInProgressRecipes[localStorageKey])
       .find((values) => values[0] === id);
     if (recipeInProgress[1].find((value) => value === ingredient)) setChecked(true);
-  }, [id, localStorageKey, ingredient]);
+  }, []);
 
   function handleCheckBox(text) {
     const isChecked = !checked;
     setChecked(isChecked);
     const allInProgressRecipes = JSON
-      .parse(localStorage.getItem('inProgressRecipes')) || {};
-    if (!allInProgressRecipes.meals && !allInProgressRecipes.cocktails) return;
+      .parse(localStorage.getItem('inProgressRecipes'));
+    if (!allInProgressRecipes) return;
     const recipeInProgress = Object
       .entries(allInProgressRecipes[localStorageKey])
       .find((values) => values[0] === id);
@@ -43,11 +58,11 @@ function IngredientBox({ index, ingredient }) {
   return (
     <label
       style={ checked ? { textDecoration: 'line-through' } : { textDecoration: 'none' } }
-      htmlFor={ `${index}-ingredient-step` }
+      htmlFor={ `${index}-checkbox` }
       data-testid={ `${index}-ingredient-step` }
     >
       <input
-        id={ `${index}-ingredient-step` }
+        id={ `${index}-checkbox` }
         checked={ checked }
         name="ingredients"
         type="checkbox"
