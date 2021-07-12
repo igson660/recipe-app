@@ -3,7 +3,7 @@ import { useHistory, Link } from 'react-router-dom';
 import useRecipesInProgressContext from '../hooks/mealInProgress';
 
 function ButtonsMeal() {
-  const { recipeInProgress, setRecipeInProgress } = useRecipesInProgressContext();
+  const { setRecipeInProgress } = useRecipesInProgressContext();
   const history = useHistory();
   const { location: { pathname } } = history;
   const id = pathname.split('/')[2];
@@ -19,10 +19,17 @@ function ButtonsMeal() {
   function initialRecipe(mealId) {
     const allRecipesInProgress = JSON.parse(localStorage
       .getItem('inProgressRecipes')) || {};
-    if (!allRecipesInProgress.meals) return;
+    if (!allRecipesInProgress.meals) {
+      const initialStorage = {
+        ...allRecipesInProgress,
+        meals: { [mealId]: [] },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(initialStorage));
+      return;
+    }
     const newLocalStorage = {
       ...allRecipesInProgress,
-      meals: { ...recipeInProgress.meals, [mealId]: [] } };
+      meals: { ...allRecipesInProgress.meals, [mealId]: [] } };
     setRecipeInProgress(newLocalStorage);
     localStorage.setItem('inProgressRecipes', JSON.stringify(newLocalStorage));
   }

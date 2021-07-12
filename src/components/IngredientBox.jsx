@@ -49,10 +49,10 @@ function IngredientBox({ index, ingredient }) {
       <input
         id={ `${index}-ingredient-step` }
         checked={ checked }
-        defaultChecked={ checked }
         name="ingredients"
         type="checkbox"
-        onChange={ ({ target }) => handleCheckBox(target.value) }
+        value={ ingredient }
+        onClick={ ({ target }) => handleCheckBox(target.value) }
       />
       { ingredient }
     </label>

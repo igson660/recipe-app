@@ -19,7 +19,14 @@ function ButtonsDrink() {
   function initialRecipe(drinkId) {
     const allRecipesInProgress = JSON.parse(localStorage
       .getItem('inProgressRecipes')) || {};
-    if (!allRecipesInProgress.meals) return;
+    if (!allRecipesInProgress.cocktails) {
+      const initialStorage = {
+        ...allRecipesInProgress,
+        cocktails: { [drinkId]: [] },
+      };
+      localStorage.setItem('inProgressRecipes', JSON.stringify(initialStorage));
+      return;
+    }
     const newLocalStorage = {
       ...allRecipesInProgress,
       cocktails: { ...recipeInProgress.cocktails, [drinkId]: [] } };
