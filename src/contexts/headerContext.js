@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 export const HeaderContext = createContext();
 
 export function HeaderContextProvider({ children }) {
-  const [toggleSearchBar, setToggleSearchBar] = useState(false);
+  const [toggleSearchBar, setToggleSearchBar] = useState(false); // test
 
   return (
     <HeaderContext.Provider
