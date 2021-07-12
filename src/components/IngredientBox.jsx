@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 
-function IngredientBox({ index, ingredient }) {
+function IngredientBox({ index, ingredient, verify }) {
   const [checked, setChecked] = useState(false);
   const { location: { pathname } } = useHistory();
+
   const typeOfRecipe = pathname.split('/')[1];
   const id = pathname.split('/')[2];
   let localStorageKey = 'meals';
@@ -38,6 +39,7 @@ function IngredientBox({ index, ingredient }) {
   function handleCheckBox(text) {
     const isChecked = !checked;
     setChecked(isChecked);
+    let action = 'subtract';
     const allInProgressRecipes = JSON
       .parse(localStorage.getItem('inProgressRecipes'));
     if (!allInProgressRecipes) return;
@@ -47,6 +49,7 @@ function IngredientBox({ index, ingredient }) {
     let newArrayIngredients = recipeInProgress[1].filter((value) => value !== text);
     if (isChecked) {
       newArrayIngredients = [...recipeInProgress[1], text];
+      action = 'add';
     }
     const newAllInProgressRecipes = {
       ...allInProgressRecipes,
@@ -54,6 +57,7 @@ function IngredientBox({ index, ingredient }) {
         [id]: newArrayIngredients },
     };
     localStorage.setItem('inProgressRecipes', JSON.stringify(newAllInProgressRecipes));
+    verify(action);
   }
   return (
     <label
@@ -67,7 +71,7 @@ function IngredientBox({ index, ingredient }) {
         name="ingredients"
         type="checkbox"
         value={ ingredient }
-        onClick={ ({ target }) => handleCheckBox(target.value) }
+        onChange={ ({ target }) => handleCheckBox(target.value) }
       />
       { ingredient }
     </label>
@@ -79,4 +83,5 @@ export default IngredientBox;
 IngredientBox.propTypes = {
   index: PropTypes.number,
   ingredient: PropTypes.string,
+  verify: PropTypes.func,
 }.isRequired;

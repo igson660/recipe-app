@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Container, Image, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import useSearchBar from '../hooks/searchBar';
@@ -15,6 +15,7 @@ export default function DrinkDetail() {
   const id = pathname.split('/')[2];
   const { selectedDrink,
     setSelectedDrink, setIngredientsDrink } = useSearchBar();
+  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
     const handleStateDrink = async () => {
@@ -61,10 +62,10 @@ export default function DrinkDetail() {
         </Row>
       </Container>
       <p data-testid="recipe-category">{ selectedDrink.strAlcoholic }</p>
-      <IngredientsInProgressDrink />
+      <IngredientsInProgressDrink isFinished={ setIsFinished } />
       <p data-testid="instructions">{ selectedDrink.strInstructions }</p>
       <VideoAndCarouselMeal />
-      <FinishButton />
+      <FinishButton isFinished={ !isFinished } />
       <Footer />
     </div>
   );

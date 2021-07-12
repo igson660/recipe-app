@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Container, Image, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import ShareButton from '../components/ShareButton';
@@ -15,6 +15,7 @@ function RecipeDetailProgress() {
   const { location: { pathname } } = history;
   const id = pathname.split('/')[2];
   const { selectedMeal, setSelectedMeal, setIngredientsMeal } = useSearchBar();
+  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
     const handleStateMeal = async () => {
@@ -61,10 +62,10 @@ function RecipeDetailProgress() {
         </Row>
       </Container>
       <p data-testid="recipe-category">{ selectedMeal.strCategory }</p>
-      <IngredientsInProgressMeal />
+      <IngredientsInProgressMeal isFinished={ setIsFinished } />
       <p data-testid="instructions">{ selectedMeal.strInstructions }</p>
       <CarouselDrink />
-      <FinishButton />
+      <FinishButton isFinished={ !isFinished } />
       <Footer />
     </div>
   );
