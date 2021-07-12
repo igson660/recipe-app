@@ -18,6 +18,7 @@ export default function DrinksList() {
         if (index <= maxNumberOfRecipes) {
           return (
             <DrinkCard
+              id={ recipe.idDrink }
               key={ recipe.idDrink }
               thumbnail={ recipe.strDrinkThumb }
               name={ recipe.strDrink }

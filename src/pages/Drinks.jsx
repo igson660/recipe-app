@@ -5,14 +5,17 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import SearchBar from '../components/SearchBar';
 import useSearchBar from '../hooks/searchBar';
+import useIngredients from '../hooks/ingredients';
 import {
   searchRecipes, searchCategories, searchRecipesByCategory } from '../services/api';
 
 function Drinks() {
   const maxNumberOfCategories = 5;
-  const { location: { pathname } } = useHistory();
+  const history = useHistory();
+  const { location: { pathname } } = history;
   const { setRecipes, setLoading, categories, setCategories,
     currentCategory, setCurrentCategory } = useSearchBar();
+  const { fetchingIngredients } = useIngredients();
 
   async function handleClick(category) {
     setCurrentCategory(category);
@@ -48,10 +51,17 @@ function Drinks() {
       const data = await searchCategories(pathname);
       setCategories(data);
     }
-    handleRecipes();
+    if (!fetchingIngredients) {
+      handleRecipes();
+    }
     handleCategories();
     setLoading(false);
-  }, [setLoading, pathname, setCategories, setRecipes]);
+  },
+  [setLoading,
+    pathname,
+    setCategories,
+    setRecipes,
+    fetchingIngredients]);
 
   return (
     <>
