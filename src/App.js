@@ -21,7 +21,8 @@ import RecipeFavorite from './pages/RecipeFavorite';
 import { SearchBarContextProvider } from './contexts/searchBarContext';
 import { HeaderContextProvider } from './contexts/headerContext';
 import { RecipesDoneProvider } from './contexts/recipesDoneContext';
-
+import RootProvider from './contexts/RootProvider';
+import NotFound from './components/NotFound';
 // verificar as rotas
 function App() {
   return (
@@ -62,6 +63,39 @@ function App() {
           </RecipesDoneProvider>
         </SearchBarContextProvider>
       </HeaderContextProvider>
+      <RootProvider>
+        <Route path="/" exact component={ Login } />
+        <Route path="/comidas" exact component={ Recipes } />
+        <Route path="/comidas/:id" exact component={ RecipeDetail } />
+        <Route
+          path="/comidas/:id/in-progress"
+          exact
+          component={ RecipeDetailProgress }
+        />
+        <Route path="/bebidas" exact component={ Drinks } />
+        <Route path="/bebidas/:id" exact component={ DrinkDetail } />
+        <Route
+          path="/bebidas/:id/in-progress"
+          exact
+          component={ DrinkDetailProgress }
+        />
+        <Route path="/explorar" exact component={ Explorer } />
+        <Route path="/explorar/comidas" exact component={ ExplorerRecipe } />
+        <Route path="/explorar/comidas/area" exact component={ ExplorerRecipeArea } />
+        <Route
+          path="/explorar/comidas/ingredientes"
+          component={ ExplorerRecipeIngredients }
+        />
+        <Route path="/explorar/bebidas" exact component={ ExplorerDrink } />
+        <Route path="/explorar/bebidas/area" exact component={ NotFound } />
+        <Route
+          path="/explorar/bebidas/ingredientes"
+          component={ ExplorerDrinkIngredients }
+        />
+        <Route path="/perfil" exact component={ Profile } />
+        <Route path="/receitas-feitas" exact component={ RecipeDone } />
+        <Route path="/receitas-favoritas" exact component={ RecipeFavorite } />
+      </RootProvider>
     </Switch>
   );
 }

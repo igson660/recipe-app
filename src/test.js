@@ -6,7 +6,7 @@ const receitas = [
     strCategory: 'Side',
     strArea: 'Turkish',
     strMealThumb: 'https://www.themealdb.com/images/media/meals/58oia61564916529.jpg',
-    strTags: ['Pasta', 'Curry'],
+    strTags: 'Pasta',
     strYoutube: 'https://www.youtube.com/watch?v=VVnZd8A84z4',
     strIngredient1: 'Lentils',
     strIngredient2: 'Onion',

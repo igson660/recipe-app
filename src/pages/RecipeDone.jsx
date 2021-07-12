@@ -5,7 +5,7 @@ import useRecipesDone from '../hooks/recipesDone';
 import receitas from '../test';
 
 function RecipesDone() {
-  const { recipesDone, setRecipesDone } = useRecipesDone();
+  const { setRecipesDone } = useRecipesDone();
   setRecipesDone(receitas);
   return (
     <>
