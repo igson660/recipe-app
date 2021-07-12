@@ -60,21 +60,25 @@ function IngredientBox({ index, ingredient, verify }) {
     verify(action);
   }
   return (
-    <label
-      style={ checked ? { textDecoration: 'line-through' } : { textDecoration: 'none' } }
-      htmlFor={ `${index}-checkbox` }
-      data-testid={ `${index}-ingredient-step` }
-    >
-      <input
-        id={ `${index}-checkbox` }
-        checked={ checked }
-        name="ingredients"
-        type="checkbox"
-        value={ ingredient }
-        onChange={ ({ target }) => handleCheckBox(target.value) }
-      />
-      { ingredient }
-    </label>
+    <div>
+      <label
+        style={ checked
+          ? { textDecoration: 'line-through' }
+          : { textDecoration: 'none' } }
+        htmlFor={ `${index}-checkbox` }
+        data-testid={ `${index}-ingredient-step` }
+      >
+        <input
+          id={ `${index}-checkbox` }
+          defaultChecked={ checked }
+          // checked={ checked }
+          type="checkbox"
+          value={ ingredient }
+          onChange={ ({ target }) => handleCheckBox(target.value) }
+        />
+        { ingredient }
+      </label>
+    </div>
   );
 }
 
