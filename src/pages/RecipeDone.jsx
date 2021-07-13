@@ -7,11 +7,15 @@ function RecipesDone() {
   const { recipesDone, setRecipesDone } = useRecipesDone();
 
   useEffect(() => {
-    setRecipesDone(JSON.parse(localStorage.getItem('doneRecipes')));
+    const localStorageDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (!localStorageDoneRecipes) return;
+    setRecipesDone(localStorageDoneRecipes);
   }, [setRecipesDone]);
 
   function filterAll() {
-    setRecipesDone(JSON.parse(localStorage.getItem('doneRecipes')));
+    const localStorageDoneRecipe = JSON.parse(localStorage.getItem('doneRecipes'));
+    if (!localStorageDoneRecipe) return;
+    setRecipesDone(localStorageDoneRecipe);
   }
 
   function filter(e) {

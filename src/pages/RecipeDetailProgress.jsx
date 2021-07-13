@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import ShareButton from '../components/ShareButton';
 import FavoriteButton from '../components/FavoriteButton';
 import CarouselDrink from '../components/VideoAndCarouselDrink';
-import Footer from '../components/Footer';
 import IngredientsInProgressMeal from '../components/IngredientsInProgressMeal';
 import useSearchBar from '../hooks/searchBar';
 import { getMealApi } from '../services/api';
@@ -66,7 +65,6 @@ function RecipeDetailProgress() {
       <p data-testid="instructions">{ selectedMeal.strInstructions }</p>
       <CarouselDrink />
       <FinishButton isFinished={ !isFinished } />
-      <Footer />
     </div>
   );
 }

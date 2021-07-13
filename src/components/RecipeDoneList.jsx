@@ -4,7 +4,10 @@ import useRecipesDone from '../hooks/recipesDone';
 
 export default function RecipesList() {
   const { recipesDone } = useRecipesDone();
-  const verifica = recipesDone.length > 0;
+  let verifica = false;
+  if (recipesDone) {
+    verifica = recipesDone.length > 0;
+  }
   return (
     <div>
       { verifica ? recipesDone.map((recipe, index) => (

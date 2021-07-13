@@ -3,7 +3,6 @@ import { Col, Container, Image, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import useSearchBar from '../hooks/searchBar';
 import { getMealApi } from '../services/api';
-import Footer from '../components/Footer';
 import IngredientsMeal from '../components/IngredientsMeal';
 import CarouselDrink from '../components/VideoAndCarouselDrink';
 import ShareButton from '../components/ShareButton';
@@ -66,7 +65,6 @@ export default function RecipeDetail() {
       <p data-testid="instructions">{ selectedMeal.strInstructions }</p>
       <CarouselDrink />
       <ButtonsMeal />
-      <Footer />
     </div>
   );
 }
