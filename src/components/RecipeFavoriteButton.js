@@ -28,7 +28,8 @@ function RecipeFavoriteButton({ id, setFavoritesFiltered, index }) {
 
 RecipeFavoriteButton.propTypes = {
   id: Proptypes.string,
-  setFavorites: Proptypes.func,
+  setFavoritesFiltered: Proptypes.func,
+  index: Proptypes.string,
 }.isRequired;
 
 export default RecipeFavoriteButton;

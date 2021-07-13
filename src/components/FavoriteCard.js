@@ -64,4 +64,9 @@ FavoriteCard.propTypes = {
   index: PropTypes.number,
   name: PropTypes.string,
   thumbnail: PropTypes.string,
+  area: PropTypes.string,
+  category: PropTypes.string,
+  setFavoritesFiltered: PropTypes.func,
+  alcoholicOrNot: PropTypes.string,
+  type: PropTypes.string,
 }.isRequired;
