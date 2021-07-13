@@ -13,15 +13,6 @@ function RecipeFavorite() {
     setFavoritesFiltered(localStorageFavorites);
   }, []);
 
-  // useEffect(() => {
-  //   if (filter === 'comida' || filter === 'bebida') {
-  //     setFavorites(favoritesFiltered);
-  //   }
-  //   const localStorageFavorites = JSON
-  //     .parse(localStorage.getItem('favoriteRecipes')) || [];
-  //   setFavorites(localStorageFavorites);
-  // }, [filter, favoritesFiltered]);
-
   function HandleFilter(filter) {
     if (filter === 'all') {
       setFavoritesFiltered(favorites);
@@ -58,7 +49,6 @@ function RecipeFavorite() {
       </button>
       {
         (favoritesFiltered !== null && favoritesFiltered.length > 0)
-        // && favorites.filter((favorite) => favorite.type === filter)
         && favoritesFiltered
           .map((favorite, index) => (<FavoriteCard
             thumbnail={ favorite.image }
