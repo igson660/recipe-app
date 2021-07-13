@@ -20,7 +20,7 @@ function IngredientsInProgressDrink({ isFinished }) {
       .find((values) => values[0] === id);
     setCheckedIngredients(recipeInProgress[1].length);
     if (recipeInProgress[1].length) isFinished(true);
-  }, []);
+  }, [id, isFinished]);
 
   function verifyChecked(action) {
     if (action === 'add') setCheckedIngredients((old) => old + 1);

@@ -26,7 +26,7 @@ function IngredientsInProgressMeal({ isFinished }) {
       .find((values) => values[0] === id);
     setCheckedIngredients(recipeInProgress[1].length);
     if (recipeInProgress[1].length) isFinished(true);
-  }, []);
+  }, [id, isFinished]);
 
   return (
     <ul>
