@@ -34,7 +34,7 @@ function IngredientBox({ index, ingredient, verify }) {
       .entries(allInProgressRecipes[localStorageKey])
       .find((values) => values[0] === id);
     if (recipeInProgress[1].find((value) => value === ingredient)) setChecked(true);
-  }, []);
+  }, [id, ingredient, localStorageKey, typeOfRecipe]);
 
   function handleCheckBox(text) {
     const isChecked = !checked;

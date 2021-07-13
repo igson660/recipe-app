@@ -1,67 +1,87 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 
-export default function RecipesDoneCard({ recipe, index, idMeal, dateRecipe }) {
-  const tags = [recipe.strTags];
+const copy = require('clipboard-copy');
+
+export default function RecipesDoneCard({ recipe, index }) {
+  const [copyClipboard, setCopyClipboard] = useState(false);
+
+  function handleShareButton() {
+    setCopyClipboard(true);
+    copy(`http://localhost:3000/${recipe.type}s/${recipe.id}`);
+  }
+
   return (
-    idMeal ? (
+    (recipe.type === 'comida') ? (
       <div>
-        <img
-          data-testid={ `${index}-horizontal-image` }
-          alt={ `foto do ${recipe.strMeal}` }
-          src={ recipe.strMealThumb }
-        />
-        <p data-testid={ `${index}-horizontal-name` }>
-          { recipe.strMeal }
-        </p>
+        <Link to={ `/comidas/${recipe.id}` }>
+          <img
+            data-testid={ `${index}-horizontal-image` }
+            alt={ `foto do ${recipe.name}` }
+            src={ recipe.image }
+            width="400px"
+          />
+          <p data-testid={ `${index}-horizontal-name` }>
+            { recipe.name }
+          </p>
+        </Link>
         <p data-testid={ `${index}-horizontal-top-text` }>
-          { recipe.strCategory }
-        </p>
-        <p data-testid={ `${index}-horizontal-area-text` }>
-          { recipe.strArea }
+          { `${recipe.area} - ${recipe.category}` }
         </p>
         <span data-testid={ `${index}-horizontal-done-date` }>
-          { dateRecipe }
+          { recipe.doneDate }
         </span>
-        { tags.map((tag, i) => {
+        { recipe.tags.map((tag, i) => {
           if (i <= 1) {
             return (
               <p
                 key={ i }
-                data-testid={ `${i}-${tag}-horizontal-tag` }
+                data-testid={ `${index}-${tag}-horizontal-tag` }
               >
-                { console.log(i, tag) }
                 { tag }
               </p>
             );
           }
           return null;
         }) }
-        <img
-          data-testid={ `${index}-horizontal-share-btn` }
-          alt="compartilhar"
-          src={ shareIcon }
-        />
+        { copyClipboard
+          ? <span>Link copiado!</span>
+          : (
+            <button
+              type="button"
+              onClick={ () => handleShareButton() }
+            >
+              <img
+                data-testid={ `${index}-horizontal-share-btn` }
+                alt="compartilhar"
+                src={ shareIcon }
+              />
+            </button>
+          )}
       </div>)
       : (
         <div>
-          <img
-            data-testid={ `${index}-horizontal-image` }
-            alt={ `foto do ${recipe.strDrink}` }
-            src={ recipe.strDrinkThumb }
-          />
+          <Link to={ `/bebidas/${recipe.id}` }>
+            <img
+              data-testid={ `${index}-horizontal-image` }
+              alt={ `foto do ${recipe.name}` }
+              src={ recipe.image }
+              width="400px"
+            />
+            <p data-testid={ `${index}-horizontal-name` }>
+              { recipe.name }
+            </p>
+          </Link>
           <p data-testid={ `${index}-horizontal-top-text` }>
-            { recipe.strAlcoholic }
-          </p>
-          <p data-testid={ `${index}-horizontal-name` }>
-            { recipe.strDrink }
+            { recipe.alcoholicOrNot }
           </p>
           <span data-testid={ `${index}-horizontal-done-date` }>
-            { dateRecipe }
+            { recipe.doneDate }
           </span>
-          { (tags !== null) ? tags.map((tag, i) => {
-            if (i.length <= 1) {
+          { (recipe.tags !== null) ? recipe.tags.map((tag, i) => {
+            if (i <= 1) {
               return (
                 <p
                   key={ i }
@@ -73,11 +93,20 @@ export default function RecipesDoneCard({ recipe, index, idMeal, dateRecipe }) {
             }
             return null;
           }) : null }
-          <img
-            data-testid={ `${index}-horizontal-share-btn` }
-            alt="compartilhar"
-            src={ shareIcon }
-          />
+          { copyClipboard
+            ? <span>Link copiado!</span>
+            : (
+              <button
+                type="button"
+                onClick={ () => handleShareButton() }
+              >
+                <img
+                  data-testid={ `${index}-horizontal-share-btn` }
+                  alt="compartilhar"
+                  src={ shareIcon }
+                />
+              </button>
+            )}
         </div>
       )
   );
