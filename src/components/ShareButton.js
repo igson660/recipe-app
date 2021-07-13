@@ -11,7 +11,10 @@ function ShareButton() {
 
   function handleShareButton() {
     setCopyClipboard(true);
-    copy(`http://localhost:3000${pathname}`);
+    const locationArray = pathname.split('/');
+    if (!locationArray) return;
+    const location = `/${locationArray[1]}/${locationArray[2]}`;
+    copy(`http://localhost:3000${location}`);
   }
 
   return (
