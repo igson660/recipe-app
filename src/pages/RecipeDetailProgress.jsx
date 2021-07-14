@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'; // import React
 import { Col, Container, Image, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import ShareButton from '../components/ShareButton';
