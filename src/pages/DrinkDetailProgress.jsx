@@ -3,7 +3,6 @@ import { Col, Container, Image, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import useSearchBar from '../hooks/searchBar';
 import { getDrinkApi } from '../services/api';
-import Footer from '../components/Footer';
 import FavoriteButton from '../components/FavoriteButton';
 import ShareButton from '../components/ShareButton';
 import VideoAndCarouselMeal from '../components/VideoAndCarouselMeal';
@@ -66,7 +65,6 @@ export default function DrinkDetail() {
       <p data-testid="instructions">{ selectedDrink.strInstructions }</p>
       <VideoAndCarouselMeal />
       <FinishButton isFinished={ !isFinished } />
-      <Footer />
     </div>
   );
 }

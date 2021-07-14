@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import { addRecipesInProgressToLocalStorage, addInitialLocalStorage }
+  from '../services/localStorage';
 
 function IngredientBox({ index, ingredient, verify }) {
   const [checked, setChecked] = useState(false);
@@ -14,27 +16,15 @@ function IngredientBox({ index, ingredient, verify }) {
   useEffect(() => {
     const allInProgressRecipes = JSON
       .parse(localStorage.getItem('inProgressRecipes')) || {};
-    if (!allInProgressRecipes.meals && typeOfRecipe === 'comidas') {
-      const initialStorage = {
-        ...allInProgressRecipes,
-        meals: { [id]: [] },
-      };
-      localStorage.setItem('inProgressRecipes', JSON.stringify(initialStorage));
-      return;
-    }
-    if (!allInProgressRecipes.cocktails && typeOfRecipe === 'bebidas') {
-      const initialStorage = {
-        ...allInProgressRecipes,
-        cocktails: { [id]: [] },
-      };
-      localStorage.setItem('inProgressRecipes', JSON.stringify(initialStorage));
-      return;
-    }
+    addInitialLocalStorage(typeOfRecipe, id);
+    addRecipesInProgressToLocalStorage(typeOfRecipe, id);
+    if (!allInProgressRecipes[localStorageKey]) return;
     const recipeInProgress = Object
       .entries(allInProgressRecipes[localStorageKey])
       .find((values) => values[0] === id);
+    if (!recipeInProgress) return;
     if (recipeInProgress[1].find((value) => value === ingredient)) setChecked(true);
-  }, [id, ingredient, localStorageKey, typeOfRecipe]);
+  }, []);
 
   function handleCheckBox(text) {
     const isChecked = !checked;
