@@ -56,38 +56,49 @@ function SearchBar() {
             onChange={ ({ target }) => setSearchValue(target.value) }
             type="text"
             data-testid="search-input"
+            placeholder="Pesquisar..."
           />
-          <input
-            type="radio"
-            value="ingredients"
-            data-testid="ingredient-search-radio"
-            name="search-bar-inputs"
-            onChange={ ({ target }) => setRadioValue(target.value) }
-          />
-          Ingrediente
-          <input
-            type="radio"
-            value="name"
-            data-testid="name-search-radio"
-            name="search-bar-inputs"
-            onChange={ ({ target }) => setRadioValue(target.value) }
-          />
-          Nome
-          <input
-            type="radio"
-            value="first-letter"
-            data-testid="first-letter-search-radio"
-            name="search-bar-inputs"
-            onChange={ ({ target }) => setRadioValue(target.value) }
-          />
-          Primeira letra
+          <label htmlFor="searchBarIngredient">
+            <input
+              type="radio"
+              value="ingredients"
+              data-testid="ingredient-search-radio"
+              name="search-bar-inputs"
+              id="searchBarIngredient"
+              onChange={ ({ target }) => setRadioValue(target.value) }
+            />
+            &nbsp;Ingrediente
+          </label>
+          <label htmlFor="searchBarName">
+            <input
+              type="radio"
+              value="name"
+              id="searchBarName"
+              data-testid="name-search-radio"
+              name="search-bar-inputs"
+              onChange={ ({ target }) => setRadioValue(target.value) }
+            />
+            &nbsp;Nome
+          </label>
+          <label htmlFor="searchBarFirstletter">
+            <input
+              type="radio"
+              value="first-letter"
+              data-testid="first-letter-search-radio"
+              name="search-bar-inputs"
+              id="searchBarFirstletter"
+              onChange={ ({ target }) => setRadioValue(target.value) }
+            />
+            &nbsp;Primeira letra
+          </label>
           <button
             type="button"
+            className="btn"
             data-testid="exec-search-btn"
             onClick={ handleSearchButton }
             disabled={ !(radioValue && searchValue) }
           >
-            Buscar
+            &nbsp;Buscar
           </button>
           {alert && window.alert('Sua busca deve conter somente 1 (um) caracter') }
         </div>

@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { Redirect } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/Login.css';
 
 class Login extends React.Component {
   constructor(props) {
@@ -28,7 +29,8 @@ class Login extends React.Component {
     const { email, password, isValidLogin } = this.state;
     const minPasswordLength = 6;
     return (
-      <>
+      <main id="loginLayout">
+        <h1>Receitas</h1>
         <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>
@@ -51,6 +53,7 @@ class Login extends React.Component {
             />
           </Form.Group>
           <Button
+            className="btn-block rounded-pill border-light"
             data-testid="login-submit-btn"
             variant="primary"
             type="submit"
@@ -62,7 +65,7 @@ class Login extends React.Component {
           </Button>
         </Form>
         { isValidLogin ? <Redirect to="/comidas" /> : null }
-      </>
+      </main>
     );
   }
 }
