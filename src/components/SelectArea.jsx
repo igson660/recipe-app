@@ -31,7 +31,7 @@ function SelectArea({ options }) {
       >
         All
       </option>
-      { options.map(({ strArea }) => (
+      { (options !== null && options.length > 0) && options.map(({ strArea }) => (
         <option
           key={ strArea }
           data-testid={ `${strArea}-option` }

@@ -4,6 +4,7 @@ import { SearchBarContextProvider } from './searchBarContext';
 import { HeaderContextProvider } from './headerContext';
 import { IngredientsContextProvider } from './ingredientsContext';
 import { RecipesInProgressContextProvider } from './recipesInProgressContext';
+import { RecipesDoneProvider } from './recipesDoneContext';
 
 function RootProvider({ children }) {
   return (
@@ -11,7 +12,9 @@ function RootProvider({ children }) {
       <SearchBarContextProvider>
         <IngredientsContextProvider>
           <RecipesInProgressContextProvider>
-            {children}
+            <RecipesDoneProvider>
+              {children}
+            </RecipesDoneProvider>
           </RecipesInProgressContextProvider>
         </IngredientsContextProvider>
       </SearchBarContextProvider>
