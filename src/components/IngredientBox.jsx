@@ -36,7 +36,6 @@ function IngredientBox({ index, ingredient, verify }) {
     const recipeInProgress = Object
       .entries(allInProgressRecipes[localStorageKey])
       .find((values) => values[0] === id);
-    console.log(recipeInProgress);
     let newArrayIngredients = recipeInProgress[1].filter((value) => value !== text);
     if (isChecked) {
       newArrayIngredients = [...recipeInProgress[1], text];

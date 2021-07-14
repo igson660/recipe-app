@@ -28,7 +28,9 @@ function FinishButton({ isFinished }) {
       tags = [];
     }
     if (typeRecipe === 'bebidas') {
-      tags = selectedDrink.strTags.split(',');
+      if (selectedDrink.strTags !== null && selectedDrink.strTags === 'null') {
+        tags = selectedDrink.strTags.split(',');
+      }
       const recipeDoneObject = {
         id: selectedDrink.idDrink,
         type: 'bebida',
@@ -45,7 +47,9 @@ function FinishButton({ isFinished }) {
       return;
     }
     if (typeRecipe === 'comidas') {
-      tags = selectedMeal.strTags.split(',');
+      if (selectedMeal.strTags !== null && selectedMeal.strTags === 'null') {
+        tags = selectedMeal.strTags.split(',');
+      }
       const recipeDoneObject = {
         id: selectedMeal.idMeal,
         type: 'comida',
