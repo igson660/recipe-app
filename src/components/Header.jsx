@@ -32,6 +32,7 @@ export default function Header({ title, withIconSearch = true }) {
                 <Image
                   onClick={ () => setToggleSearchBar(!toggleSearchBar) }
                   data-testid="search-top-btn"
+                  className={ toggleSearchBar ? 'iconeAtivo' : '' }
                   src={ iconSearch }
                 />
               </span>)}

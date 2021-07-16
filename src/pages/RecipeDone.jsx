@@ -29,30 +29,35 @@ function RecipesDone() {
   return (
     <>
       <Header title="Receitas Feitas" withIconSearch={ false } />
-      <button
-        type="button"
-        data-testid="filter-by-all-btn"
-        onClick={ () => filterAll() }
-      >
-        All
-      </button>
-      <button
-        type="button"
-        value="comida"
-        data-testid="filter-by-food-btn"
-        onClick={ (e) => filter(e.target.value) }
-      >
-        Food
-      </button>
-      <button
-        type="button"
-        value="bebida"
-        data-testid="filter-by-drink-btn"
-        onClick={ (e) => filter(e.target.value) }
-      >
-        Drinks
-      </button>
-      <RecipeDoneList />
+      <div id="recipeDone">
+        <button
+          className="tagFilter"
+          type="button"
+          data-testid="filter-by-all-btn"
+          onClick={ () => filterAll() }
+        >
+          All
+        </button>
+        <button
+          className="tagFilter"
+          type="button"
+          value="comida"
+          data-testid="filter-by-food-btn"
+          onClick={ (e) => filter(e.target.value) }
+        >
+          Food
+        </button>
+        <button
+          className="tagFilter"
+          type="button"
+          value="bebida"
+          data-testid="filter-by-drink-btn"
+          onClick={ (e) => filter(e.target.value) }
+        >
+          Drinks
+        </button>
+        <RecipeDoneList />
+      </div>
     </>
   );
 }

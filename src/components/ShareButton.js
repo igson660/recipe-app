@@ -1,3 +1,4 @@
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import iconShared from '../images/shareIcon.svg';
@@ -18,11 +19,30 @@ function ShareButton() {
   }
 
   return (
-    <button data-testid="share-btn" type="button" onClick={ () => handleShareButton() }>
-      { copyClipboard
-        ? <span>Link copiado!</span>
-        : <img src={ iconShared } alt="Compartilhar Receita" />}
-    </button>
+    <>
+      {['left'].map((placement) => (
+        <OverlayTrigger
+          trigger="click"
+          key={ placement }
+          placement={ placement }
+          overlay={
+            <Tooltip id={ `tooltip- ${placement} ` }>
+              Link
+              <strong> Copiado</strong>
+            </Tooltip>
+          }
+        >
+          <button
+            data-testid="share-btn"
+            type="button"
+            onClick={ () => handleShareButton() }
+          >
+            <img src={ iconShared } alt="Compartilhar Receita" />
+          </button>
+          {/* <Button variant="secondary">Popover on {placement}</Button> */}
+        </OverlayTrigger>
+      ))}
+    </>
   );
 }
 

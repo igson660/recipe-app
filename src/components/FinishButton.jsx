@@ -67,8 +67,9 @@ function FinishButton({ isFinished }) {
   }
 
   return (
-    <Link style={ { paddingBottom: '100px' } } to="/receitas-feitas">
+    <Link to="/receitas-feitas" className="startRecipe">
       <button
+        className="btn btn-danger"
         onClick={ handleLocalStorage }
         type="button"
         data-testid="finish-recipe-btn"

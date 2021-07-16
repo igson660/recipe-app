@@ -24,13 +24,12 @@ export default function RecipesDoneCard({ recipe, index }) {
         shareIcon={ shareIcon }
       />)
       : (
-        <div>
+        <div className="recipeDoneCard">
           <Link to={ `/bebidas/${recipe.id}` }>
             <img
               data-testid={ `${index}-horizontal-image` }
               alt={ `foto do ${recipe.name}` }
               src={ recipe.image }
-              width="400px"
             />
             <p data-testid={ `${index}-horizontal-name` }>
               { recipe.name }

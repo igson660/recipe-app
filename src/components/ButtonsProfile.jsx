@@ -22,7 +22,7 @@ export default function ButtonsProfile() {
         <Col>
           <Link to="/receitas-favoritas">
             <Button
-              variant="warning"
+              variant="danger"
               className="btn-block mb-1"
               data-testid="profile-favorite-btn"
             >
@@ -31,7 +31,7 @@ export default function ButtonsProfile() {
           </Link>
           <Link to="/receitas-feitas">
             <Button
-              variant="success"
+              variant="info"
               className="btn-block mb-1"
               data-testid="profile-done-btn"
             >

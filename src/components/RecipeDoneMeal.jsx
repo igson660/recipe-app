@@ -1,17 +1,16 @@
+import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function RecipeDoneMeal({ recipe, index, shareIcon, copyClipboard, handleShareButton }) {
-  console.log(recipe);
+function RecipeDoneMeal({ recipe, index, shareIcon, handleShareButton }) {
   return (
-    <div>
+    <div className="recipeDoneCard">
       <Link to={ `/comidas/${recipe.id}` }>
         <img
           data-testid={ `${index}-horizontal-image` }
           alt={ `foto do ${recipe.name}` }
           src={ recipe.image }
-          width="400px"
         />
         <p data-testid={ `${index}-horizontal-name` }>
           { recipe.name }
@@ -20,7 +19,7 @@ function RecipeDoneMeal({ recipe, index, shareIcon, copyClipboard, handleShareBu
       <p data-testid={ `${index}-horizontal-top-text` }>
         { `${recipe.area} - ${recipe.category}` }
       </p>
-      <span data-testid={ `${index}-horizontal-done-date` }>
+      <span className="dateRecipeDone" data-testid={ `${index}-horizontal-done-date` }>
         { recipe.doneDate }
       </span>
       { (recipe.tags !== undefined
@@ -37,8 +36,37 @@ function RecipeDoneMeal({ recipe, index, shareIcon, copyClipboard, handleShareBu
           }
           return null;
         }) : null }
-      { copyClipboard
-        ? <span>Link copiado!</span>
+      {['right'].map((placement) => (
+        <OverlayTrigger
+          trigger="click"
+          key={ placement }
+          placement={ placement }
+          overlay={
+            <Tooltip id={ `tooltip- ${placement} ` }>
+              Link
+              <strong> Copiado</strong>
+            </Tooltip>
+          }
+        >
+          <button
+            data-testid="share-btn"
+            type="button"
+            onClick={ () => handleShareButton() }
+          >
+            <img
+              data-testid={ `${index}-horizontal-share-btn` }
+              alt="compartilhar"
+              src={ shareIcon }
+            />
+          </button>
+          {/* <Button variant="secondary">Popover on {placement}</Button> */}
+        </OverlayTrigger>
+      ))}
+    </div>);
+  /* { copyClipboard
+        ? (
+
+        )
         : (
           <button
             type="button"
@@ -50,8 +78,7 @@ function RecipeDoneMeal({ recipe, index, shareIcon, copyClipboard, handleShareBu
               src={ shareIcon }
             />
           </button>
-        )}
-    </div>);
+        )} */
 }
 
 export default RecipeDoneMeal;

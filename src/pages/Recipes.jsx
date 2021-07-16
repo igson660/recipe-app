@@ -8,6 +8,7 @@ import useSearchBar from '../hooks/searchBar';
 import useIngredients from '../hooks/ingredients';
 import {
   searchRecipes, searchCategories, searchRecipesByCategory } from '../services/api';
+import useHeader from '../hooks/header';
 
 export default function Recipes() {
   const maxNumberOfCategories = 5;
@@ -15,6 +16,7 @@ export default function Recipes() {
     currentCategory, setCurrentCategory } = useSearchBar();
   const { location: { pathname } } = useHistory();
   const { fetchingIngredients } = useIngredients();
+  const { toggleSearchBar } = useHeader();
 
   async function handleClick(category) {
     setCurrentCategory(category);
@@ -60,7 +62,7 @@ export default function Recipes() {
     <>
       <Header title="Comidas" />
       <SearchBar />
-      <div>
+      <div className={ toggleSearchBar ? 'searchActivated' : 'searchDesativated' }>
         <button
           type="submit"
           data-testid="All-category-filter"

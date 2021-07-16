@@ -11,6 +11,7 @@ function IngredientsMeal() {
               <li
                 data-testid={ `${indice}-ingredient-name-and-measure` }
                 key={ ingred }
+                className="listItemsIngredients"
               >
                 { ingred }
               </li>

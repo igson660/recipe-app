@@ -1,0 +1,9 @@
+.container-fluid:nth-child(2) {
+  background: none;
+  box-shadow: none;
+}
+
+button.btn-block.mb-1.btn.btn-info {
+  background-color: orange;
+  border-color: darkorange;
+}

@@ -9,7 +9,7 @@ export default function RecipesList() {
     verifica = recipesDone.length > 0;
   }
   return (
-    <div>
+    <div className="listItems">
       { verifica ? recipesDone.map((recipe, index) => (
         <RecipeDoneCard
           key={ index }

@@ -4,6 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { Redirect } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/Login.css';
+import LogoPrincipal from '../images/Logo.svg';
 
 class Login extends React.Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class Login extends React.Component {
     const minPasswordLength = 6;
     return (
       <main id="loginLayout">
-        <h1>Receitas</h1>
+        <img src={ LogoPrincipal } alt="logotipo principal do aplicativo" />
         <Form>
           <Form.Group controlId="formBasicEmail">
             <Form.Label>Email address</Form.Label>

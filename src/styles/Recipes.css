@@ -44,7 +44,6 @@
 
 /* tags */
 #root > div:nth-child(3) {
-  padding-top: 50px;
   display: flex;
   flex-wrap: nowrap;
   justify-content: flex-start;
@@ -127,10 +126,6 @@ div.row > button {
   flex-direction: column;
 }
 
-[data-testid="start-recipe-btn"] {
-  margin-bottom: 100px;
-}
-
 .startRecipe {
   padding: 40px 0;
   text-align: center;
@@ -159,6 +154,8 @@ div.row > button {
 
 h3[data-testid="recipe-title"] {
   text-shadow: 0px 2px 0px black;
+  background-color: rgb(222 22 22 / 57%);
+  padding: 5px 3px;
 }
 
 #recipeDetail ul {
@@ -167,13 +164,17 @@ h3[data-testid="recipe-title"] {
   flex-direction: column;
   row-gap: 5px;
 }
-#recipeDetail ul li {
+#recipeDetail ul .listItemsIngredients {
   list-style-type: none;
   padding: 10px 20px;
   border-bottom: .01px solid #80808059;
 }
-#recipeDetail ul li:nth-child(even) {
+#recipeDetail ul .listItemsIngredients:nth-child(even) {
   background-color: #d2691e59;
+}
+
+#recipeDetail ul .listItemsIngredients input {
+  display: none;
 }
 
 /* paragraph */
@@ -185,4 +186,95 @@ h3[data-testid="recipe-title"] {
   font-size: 50px;
   float: left;
   line-height: 47px;
+}
+
+
+/* toggle icone search */
+.iconeAtivo {
+  filter: contrast(1.2) hue-rotate(157deg);
+}
+
+.searchActivated {
+  padding-top: none;
+}
+
+.searchDesativated {
+  padding-top: 55px;
+}
+
+#recipeDone {
+  padding-top: 55px;
+}
+
+#recipeDone .tagFilter {
+  border-width: 3px;
+  border-color: chocolate;
+  border-style: dashed;
+  color: white;
+  background-color: brown;
+  margin: 0px 3px 10px 3px;
+  padding: 5px 19px;
+  border-radius: 20px;
+  min-inline-size: -moz-fit-content;
+  min-inline-size: fit-content;
+}
+
+#recipeDone .tagFilter:focus {
+  background-color: chocolate;
+}
+
+#recipeDone .listItems {
+  display: flex;
+  flex-direction: column;
+  margin: initial !important;
+  padding-top: 0px !important;
+}
+
+#recipeDone .listItems a img {
+  width: 100%;
+}
+
+.recipeDoneCard > p {
+  position: absolute;
+  margin: -150px auto;
+  color: white;
+  width: 360px;
+  text-align: center;
+  background-color: black;
+}
+
+div.recipeDoneCard a p {
+  position: absolute;
+  margin: -200px auto;
+  width: 100%;
+  text-align: center;
+  font-size: 20px;
+  color: white;
+  text-shadow: 0 2px black;
+  background-color: brown;
+  padding: 10px 0;
+}
+
+.dateRecipeDone {
+  position: absolute;
+  margin: 250px auto;
+  width: 360px;
+  left: 0;
+  text-align: center;
+}
+
+.recipeDoneCard {
+  padding-bottom: 20px;
+}
+
+.recipeDoneCard button {
+  border: 1px solid;
+  background-color: var(--orange);
+  filter: invert(100%) brightness(100%) contrast(100%);
+  border-radius: 50%;
+  padding: 5px;
+  margin: 3px 0px;
+  position: absolute;
+  margin-top: 100px;
+  left: 45%;
 }

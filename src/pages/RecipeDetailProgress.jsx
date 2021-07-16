@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'; // import React
-import { Col, Container, Image, Row } from 'react-bootstrap';
+import { Container, Image, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import ShareButton from '../components/ShareButton';
 import FavoriteButton from '../components/FavoriteButton';
@@ -8,6 +8,7 @@ import IngredientsInProgressMeal from '../components/IngredientsInProgressMeal';
 import useSearchBar from '../hooks/searchBar';
 import { getMealApi } from '../services/api';
 import FinishButton from '../components/FinishButton';
+import '../styles/Recipes.css';
 
 function RecipeDetailProgress() {
   const history = useHistory();
@@ -40,7 +41,7 @@ function RecipeDetailProgress() {
   }, [pathname, setSelectedMeal, id, setIngredientsMeal]);
 
   return (
-    <div>
+    <div id="recipeDetail">
       <Image
         data-testid="recipe-photo"
         src={ selectedMeal.strMealThumb }
@@ -48,19 +49,19 @@ function RecipeDetailProgress() {
         fluid
       />
       <Container>
-        <Row>
-          <Col>
+        <>
+          <Row>
+            <p data-testid="recipe-category">{ selectedMeal.strCategory }</p>
+          </Row>
+          <Row>
             <h3 data-testid="recipe-title">{ selectedMeal.strMeal }</h3>
-          </Col>
-          <Col>
-            <ShareButton />
-          </Col>
-          <Col>
+          </Row>
+          <Row>
             <FavoriteButton />
-          </Col>
-        </Row>
+            <ShareButton />
+          </Row>
+        </>
       </Container>
-      <p data-testid="recipe-category">{ selectedMeal.strCategory }</p>
       <IngredientsInProgressMeal isFinished={ setIsFinished } />
       <p data-testid="instructions">{ selectedMeal.strInstructions }</p>
       <CarouselDrink />

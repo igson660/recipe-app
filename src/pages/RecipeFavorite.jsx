@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FavoriteCard from '../components/FavoriteCard';
 import Header from '../components/Header';
+import '../styles/Recipes.css';
 
 function RecipeFavorite() {
   const [favorites, setFavorites] = useState([]);
@@ -25,30 +26,34 @@ function RecipeFavorite() {
   return (
     <>
       <Header title="Receitas Favoritas" withIconSearch={ false } />
-      <button
-        type="button"
-        data-testid="filter-by-all-btn"
-        onClick={ () => HandleFilter('all') }
-      >
-        Todas
-      </button>
-      <button
-        type="button"
-        data-testid="filter-by-food-btn"
-        onClick={ () => HandleFilter('comida') }
-      >
-        Comidas
-      </button>
-      <button
-        type="button"
-        data-testid="filter-by-drink-btn"
-        onClick={ () => HandleFilter('bebida') }
+      <div id="recipeDone">
+        <button
+          className="tagFilter"
+          type="button"
+          data-testid="filter-by-all-btn"
+          onClick={ () => HandleFilter('all') }
+        >
+          Todas
+        </button>
+        <button
+          className="tagFilter"
+          type="button"
+          data-testid="filter-by-food-btn"
+          onClick={ () => HandleFilter('comida') }
+        >
+          Comidas
+        </button>
+        <button
+          className="tagFilter"
+          type="button"
+          data-testid="filter-by-drink-btn"
+          onClick={ () => HandleFilter('bebida') }
 
-      >
-        Bebidas
-      </button>
-      {
-        (favoritesFiltered !== null && favoritesFiltered.length > 0)
+        >
+          Bebidas
+        </button>
+        {
+          (favoritesFiltered !== null && favoritesFiltered.length > 0)
         && favoritesFiltered
           .map((favorite, index) => (<FavoriteCard
             thumbnail={ favorite.image }
@@ -62,7 +67,8 @@ function RecipeFavorite() {
             type={ favorite.type }
             alcoholicOrNot={ favorite.alcoholicOrNot }
           />))
-      }
+        }
+      </div>
     </>
   );
 }
