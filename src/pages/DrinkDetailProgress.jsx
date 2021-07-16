@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Col, Container, Image, Row } from 'react-bootstrap';
+import { Container, Image, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import useSearchBar from '../hooks/searchBar';
 import { getDrinkApi } from '../services/api';
@@ -8,6 +8,7 @@ import ShareButton from '../components/ShareButton';
 import VideoAndCarouselMeal from '../components/VideoAndCarouselMeal';
 import IngredientsInProgressDrink from '../components/IngredientsInProgressDrink';
 import FinishButton from '../components/FinishButton';
+import '../styles/Recipes.css';
 
 export default function DrinkDetail() {
   const { location: { pathname } } = useHistory();
@@ -40,7 +41,7 @@ export default function DrinkDetail() {
   }, [setSelectedDrink, pathname, id, setIngredientsDrink]);
 
   return (
-    <div>
+    <div id="recipeDetail">
       <Image
         data-testid="recipe-photo"
         src={ selectedDrink.strDrinkThumb }
@@ -48,19 +49,19 @@ export default function DrinkDetail() {
         fluid
       />
       <Container>
-        <Row>
-          <Col>
+        <>
+          <Row>
+            <p data-testid="recipe-category">{ selectedDrink.strAlcoholic }</p>
+          </Row>
+          <Row>
             <h3 data-testid="recipe-title">{ selectedDrink.strDrink }</h3>
-          </Col>
-          <Col>
-            <ShareButton />
-          </Col>
-          <Col>
+          </Row>
+          <Row>
             <FavoriteButton />
-          </Col>
-        </Row>
+            <ShareButton />
+          </Row>
+        </>
       </Container>
-      <p data-testid="recipe-category">{ selectedDrink.strAlcoholic }</p>
       <IngredientsInProgressDrink isFinished={ setIsFinished } />
       <p data-testid="instructions">{ selectedDrink.strInstructions }</p>
       <VideoAndCarouselMeal />

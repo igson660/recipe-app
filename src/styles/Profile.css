@@ -7,3 +7,39 @@ button.btn-block.mb-1.btn.btn-info {
   background-color: orange;
   border-color: darkorange;
 }
+
+/* select area (Explorer pages) */
+[data-testid="explore-by-area-dropdown"] {
+  width: 100%
+}
+
+div#recipeDone div div a [data-testid*="card-img"] {
+  width: 100%;
+}
+
+.drinkFilterBtn {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  overflow-x: auto;
+}
+
+.drinkFilterBtn button {
+  border-width: 3px;
+    border-color: chocolate;
+    border-style: dashed;
+    color: white;
+    background-color: brown;
+    margin: 0px 3px 10px 3px;
+    padding: 5px 19px;
+    border-radius: 20px;
+    min-inline-size: -moz-fit-content;
+    min-inline-size: fit-content;
+}
+
+.recipeDoneSearchBtn {
+  display: block !important;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  overflow-x: auto;
+}

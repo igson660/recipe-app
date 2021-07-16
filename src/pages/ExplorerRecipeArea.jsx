@@ -26,8 +26,10 @@ function ExplorerRecipeArea() {
   return (
     <>
       <Header title="Explorar Origem" />
-      <SelectArea options={ areaList } />
-      <RecipesList />
+      <div id="recipeDone">
+        <SelectArea options={ areaList } />
+        <RecipesList />
+      </div>
       <Footer />
     </>
   );

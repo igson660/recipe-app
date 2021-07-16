@@ -20,9 +20,10 @@ function ExploreButtons({ exploreByArea = true }) {
   }, [pathname]);
 
   return (
-    <>
+    <div id="recipeDone">
       <Link to={ `${pathname}/ingredientes` }>
         <button
+          className="tagFilter"
           type="button"
           data-testid="explore-by-ingredient"
         >
@@ -32,6 +33,7 @@ function ExploreButtons({ exploreByArea = true }) {
       <Link to={ `${pathname}/area` }>
         { exploreByArea && (
           <button
+            className="tagFilter"
             type="button"
             data-testid="explore-by-area"
           >
@@ -39,8 +41,10 @@ function ExploreButtons({ exploreByArea = true }) {
           </button>)}
 
       </Link>
+      <br />
       <Link to={ path }>
         <button
+          className="tagFilter"
           type="button"
           data-testid="explore-surprise"
         >
@@ -48,7 +52,7 @@ function ExploreButtons({ exploreByArea = true }) {
         </button>
 
       </Link>
-    </>
+    </div>
   );
 }
 

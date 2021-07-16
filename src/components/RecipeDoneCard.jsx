@@ -38,7 +38,10 @@ export default function RecipesDoneCard({ recipe, index }) {
           <p data-testid={ `${index}-horizontal-top-text` }>
             { recipe.alcoholicOrNot }
           </p>
-          <span data-testid={ `${index}-horizontal-done-date` }>
+          <span
+            className="dateRecipeDone"
+            data-testid={ `${index}-horizontal-done-date` }
+          >
             { recipe.doneDate }
           </span>
           { (recipe.tags !== undefined

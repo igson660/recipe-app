@@ -67,33 +67,36 @@ function Drinks() {
     <>
       <Header title="Bebidas" />
       <SearchBar />
-      <div>
-        <button
-          type="submit"
-          data-testid="All-category-filter"
-          onClick={ () => handleAllRecipes() }
-        >
-          All
-        </button>
-        { (categories !== null && categories.length > 0)
-        && categories.map((category, index) => {
-          if (index < maxNumberOfCategories) {
-            return (
-              <button
-                key={ index }
-                type="submit"
-                value={ category.strCategory }
-                data-testid={ `${category.strCategory}-category-filter` }
-                onClick={ () => handleClick(category.strCategory) }
-              >
-                {category.strCategory}
-              </button>
-            );
-          }
-          return null;
-        }) }
+      <div id="recipeDone" className="recipeDoneSearchBtn">
+        <div className="drinkFilterBtn">
+          <button
+            type="submit"
+            data-testid="All-category-filter"
+            onClick={ () => handleAllRecipes() }
+          >
+            All
+          </button>
+          { (categories !== null && categories.length > 0)
+          && categories.map((category, index) => {
+            if (index < maxNumberOfCategories) {
+              return (
+                <button
+                  key={ index }
+                  type="submit"
+                  value={ category.strCategory }
+                  data-testid={ `${category.strCategory}-category-filter` }
+                  onClick={ () => handleClick(category.strCategory) }
+                >
+                  {category.strCategory}
+                </button>
+              );
+            }
+            return null;
+          }) }
+        </div>
+        <DrinksList />
       </div>
-      <DrinksList />
+      <div />
       <Footer />
     </>
   );

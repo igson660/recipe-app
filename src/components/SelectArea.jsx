@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { fetchMealsByArea, searchRecipes } from '../services/api';
 import useSearchBar from '../hooks/searchBar';
+import '../styles/Profile.css';
 
 function SelectArea({ options }) {
   const { setRecipes } = useSearchBar();

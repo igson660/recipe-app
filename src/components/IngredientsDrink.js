@@ -9,6 +9,7 @@ function IngredientsDrink() {
         (ingredientsDrink !== null && ingredientsDrink.length > 0)
             && ingredientsDrink.map((ingred, indice) => (
               <li
+                className="listItemsIngredients"
                 data-testid={ `${indice}-ingredient-name-and-measure` }
                 key={ ingred }
               >

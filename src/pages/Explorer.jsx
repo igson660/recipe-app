@@ -17,28 +17,30 @@ class ExplorerScreen extends Component {
 
   render() {
     return (
-      <div className="explore-screen">
+      <>
         <Header title="Explorar" withIconSearch={ false } />
-        <button
-          className="explore-screen-button"
-          type="button"
-          name="comidas"
-          data-testid="explore-food"
-          onClick={ this.handleClick }
-        >
-          Explorar Comidas
-        </button>
-        <button
-          className="explore-screen-button"
-          type="button"
-          name="bebidas"
-          data-testid="explore-drinks"
-          onClick={ this.handleClick }
-        >
-          Explorar Bebidas
-        </button>
+        <div className="explore-screen" id="recipeDone">
+          <button
+            className="explore-screen-button tagFilter"
+            type="button"
+            name="comidas"
+            data-testid="explore-food"
+            onClick={ this.handleClick }
+          >
+            Explorar Comidas
+          </button>
+          <button
+            className="explore-screen-button tagFilter"
+            type="button"
+            name="bebidas"
+            data-testid="explore-drinks"
+            onClick={ this.handleClick }
+          >
+            Explorar Bebidas
+          </button>
+        </div>
         <Footer />
-      </div>
+      </>
     );
   }
 }
