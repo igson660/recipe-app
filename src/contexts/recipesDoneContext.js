@@ -5,10 +5,11 @@ export const RecipesDoneContext = createContext();
 
 export function RecipesDoneProvider({ children }) {
   const [recipesDone, setRecipesDone] = useState([]);
+  const [allRecipesDone, setAllRecipesDone] = useState([]);
 
   return (
     <RecipesDoneContext.Provider
-      value={ { recipesDone, setRecipesDone } }
+      value={ { recipesDone, setRecipesDone, allRecipesDone, setAllRecipesDone } }
     >
       {children}
     </RecipesDoneContext.Provider>

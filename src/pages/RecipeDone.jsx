@@ -4,13 +4,15 @@ import RecipeDoneList from '../components/RecipeDoneList';
 import useRecipesDone from '../hooks/recipesDone';
 
 function RecipesDone() {
-  const { recipesDone, setRecipesDone } = useRecipesDone();
+  const { recipesDone, setRecipesDone,
+    allRecipesDone, setAllRecipesDone } = useRecipesDone();
 
   useEffect(() => {
     const localStorageDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
     if (!localStorageDoneRecipes) return;
     setRecipesDone(localStorageDoneRecipes);
-  }, [setRecipesDone]);
+    setAllRecipesDone(localStorageDoneRecipes);
+  }, []);
 
   function filterAll() {
     const localStorageDoneRecipe = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -20,7 +22,7 @@ function RecipesDone() {
 
   function filter(e) {
     if (recipesDone !== undefined) {
-      const filtered = recipesDone.filter((recipe) => (recipe.type === e));
+      const filtered = allRecipesDone.filter((recipe) => (recipe.type === e));
       setRecipesDone(filtered);
     }
     return null;
