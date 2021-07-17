@@ -38,7 +38,7 @@ export default function RecipeDetail() {
       }
     };
     handleStateMeal();
-  }, [pathname, setSelectedMeal, id, setIngredientsMeal]);
+  }, []);
 
   return (
     <div id="recipeDetail">

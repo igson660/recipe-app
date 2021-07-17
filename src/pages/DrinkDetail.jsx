@@ -37,7 +37,7 @@ export default function DrinkDetail() {
       }
     };
     handleStateDrink();
-  }, [setSelectedDrink, pathname, id, setIngredientsDrink]);
+  }, []);
 
   return (
     <div id="recipeDetail">
