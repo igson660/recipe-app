@@ -30,6 +30,7 @@ function ButtonsMeal() {
               <button
                 type="button"
                 data-testid="start-recipe-btn"
+                className="btn btn-danger"
               >
                 Continuar Receita
               </button>)
